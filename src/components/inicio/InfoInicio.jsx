@@ -1,7 +1,7 @@
 import React from "react";
-import imagen from "../assets/react.svg";
+import imagen from "../../assets/react.svg";
 
-export const InfoInicio = () => {
+export default function InfoInicio() {
   return (
     <section className="infoInicio">
       <img src={imagen} alt="Logo Inicio" />
@@ -14,4 +14,4 @@ export const InfoInicio = () => {
       </p>
     </section>
   );
-};
+}

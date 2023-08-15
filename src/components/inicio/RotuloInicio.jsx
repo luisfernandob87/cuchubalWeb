@@ -1,6 +1,6 @@
 import React from "react";
 
-export const RotuloInicio = () => {
+export default function RotuloInicio() {
   return (
     <section className="rotuloInicio">
       <h3>Simplifique su forma de ahorrar</h3>
@@ -10,4 +10,4 @@ export const RotuloInicio = () => {
       </p>
     </section>
   );
-};
+}

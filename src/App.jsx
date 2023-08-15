@@ -1,19 +1,28 @@
 import "./App.css";
-import { Footer } from "./components/Footer";
-import { FuncionalidadesInicio } from "./components/FuncionalidadesInicio";
-import { InfoInicio } from "./components/InfoInicio";
-import { MenuInicio } from "./components/MenuInicio";
-import { RotuloInicio } from "./components/RotuloInicio";
+import Principal from "./components/Principal";
+import { HashRouter, Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import CrearCuenta from "./components/CrearCuenta";
+import Funciones from "./components/Funciones";
+import Preguntas from "./components/Preguntas";
+import Politica from "./components/Politicas";
+import Contacto from "./components/Contacto";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 
 function App() {
   return (
-    <>
-      <MenuInicio />
-      <InfoInicio />
-      <RotuloInicio />
-      <FuncionalidadesInicio />
-      <Footer />
-    </>
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<Principal />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/add" element={<CrearCuenta />} />
+        <Route path="/functions" element={<Funciones />} />
+        <Route path="/faq" element={<Preguntas />} />
+        <Route path="/confidentiality" element={<Politica />} />
+        <Route path="/contact" element={<Contacto />} />
+        <Route element={<ProtectedRoutes />}></Route>
+      </Routes>
+    </HashRouter>
   );
 }
 
