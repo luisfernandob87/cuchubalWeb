@@ -1,12 +1,11 @@
 import React from "react";
-import MenuInicio from "./inicio/MenuInicio";
 import Footer from "./inicio/Footer";
+import Principal from "./crearCuenta/Principal";
 
 function CrearCuenta() {
   return (
     <>
-      <MenuInicio />
-
+      <Principal />
       <Footer />
     </>
   );
