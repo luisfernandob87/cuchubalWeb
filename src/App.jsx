@@ -8,6 +8,7 @@ import Preguntas from "./components/Preguntas";
 import Politica from "./components/Politicas";
 import Contacto from "./components/Contacto";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import Cuchubal from "./components/Cuchubal";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/faq" element={<Preguntas />} />
         <Route path="/confidentiality" element={<Politica />} />
         <Route path="/contact" element={<Contacto />} />
+        <Route path="/cuchubal" element={<Cuchubal />} />
         <Route element={<ProtectedRoutes />}></Route>
       </Routes>
     </HashRouter>

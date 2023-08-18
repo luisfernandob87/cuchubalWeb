@@ -31,7 +31,13 @@ function Principal() {
         />
         {errors.exampleRequired && <span>El campo es requerido</span>}
 
-        <input type="submit" value="Iniciar Sesión" />
+        <input
+          type="submit"
+          value="Iniciar Sesión"
+          onClick={() => {
+            navigate("/cuchubal");
+          }}
+        />
       </form>
       <a href="#">Crear Cuenta</a>
       <a href="#">Reiniciar Contraseña</a>

@@ -45,13 +45,22 @@ img {
   max-width: 10rem;
 }
 
-.menuInicio {
+header nav {
   background: #f9c74f;
   display: flex;
   align-items: center;
   justify-content: space-around;
   padding: 2rem;
 }
+aside {
+  margin-top: 5rem;
+  width: 10rem;
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .infoInicio {
   background-color: aquamarine;
   display: flex;
