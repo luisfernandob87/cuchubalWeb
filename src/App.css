@@ -53,12 +53,17 @@ header nav {
   padding: 2rem;
 }
 aside {
-  margin-top: 5rem;
-  width: 10rem;
-  height: 20rem;
+  width: 25%;
+  height: 60vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
+  background-color: dodgerblue;
+  float: left;
+}
+.content {
+  background-color: green;
+  margin-left: 25%;
 }
 
 .infoInicio {
