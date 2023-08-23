@@ -1,6 +1,6 @@
 import "./App.css";
 import Principal from "./components/Principal";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import CrearCuenta from "./components/CrearCuenta";
 import Funciones from "./components/Funciones";
@@ -12,19 +12,18 @@ import Cuchubal from "./components/Cuchubal";
 
 function App() {
   return (
-    <HashRouter>
-      <Routes>
-        <Route path="/" element={<Principal />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/add" element={<CrearCuenta />} />
-        <Route path="/functions" element={<Funciones />} />
-        <Route path="/faq" element={<Preguntas />} />
-        <Route path="/confidentiality" element={<Politica />} />
-        <Route path="/contact" element={<Contacto />} />
-        <Route path="/cuchubal" element={<Cuchubal />} />
-        <Route element={<ProtectedRoutes />}></Route>
-      </Routes>
-    </HashRouter>
+    <Routes>
+      <Route path="/" element={<Principal />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/add" element={<CrearCuenta />} />
+      <Route path="/functions" element={<Funciones />} />
+      <Route path="/faq" element={<Preguntas />} />
+      <Route path="/confidentiality" element={<Politica />} />
+      <Route path="/contact" element={<Contacto />} />
+      <Route element={<ProtectedRoutes />}>
+        <Route path="/cuchubal/*" element={<Cuchubal />} />
+      </Route>
+    </Routes>
   );
 }
 

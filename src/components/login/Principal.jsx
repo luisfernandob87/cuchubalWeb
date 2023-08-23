@@ -11,7 +11,16 @@ function Principal() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const page = "http://localhost:3000";
+
+  const submit = (data) => {
+    axios.post(`${page}/login`, data).then((res) => {
+      localStorage.setItem("usuario", res.data.data.user.nombre),
+        localStorage.setItem("token", res.data.data.token);
+      navigate("/cuchubal");
+    });
+  };
   return (
     <>
       <img
@@ -22,8 +31,8 @@ function Principal() {
         }}
       />
       <h4>Crea y administra tus cuchubales</h4>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="email" {...register("username", { required: true })} />
+      <form onSubmit={handleSubmit(submit)}>
+        <input type="email" {...register("correo", { required: true })} />
         <input
           type="password"
           inputMode="current-password"
@@ -31,13 +40,7 @@ function Principal() {
         />
         {errors.exampleRequired && <span>El campo es requerido</span>}
 
-        <input
-          type="submit"
-          value="Iniciar Sesión"
-          onClick={() => {
-            navigate("/cuchubal");
-          }}
-        />
+        <input type="submit" value="Iniciar Sesión" />
       </form>
       <a href="#">Crear Cuenta</a>
       <a href="#">Reiniciar Contraseña</a>
