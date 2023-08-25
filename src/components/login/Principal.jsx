@@ -42,7 +42,13 @@ function Principal() {
 
         <input type="submit" value="Iniciar Sesión" />
       </form>
-      <a href="#">Crear Cuenta</a>
+      <a
+        onClick={() => {
+          navigate("/add");
+        }}
+      >
+        Crear Cuenta
+      </a>
       <a href="#">Reiniciar Contraseña</a>
     </>
   );
