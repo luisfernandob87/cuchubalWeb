@@ -17,7 +17,8 @@ function Principal() {
   const submit = (data) => {
     axios.post(`${page}/login`, data).then((res) => {
       localStorage.setItem("usuario", res.data.data.user.nombre),
-        localStorage.setItem("token", res.data.data.token);
+        localStorage.setItem("token", res.data.data.token),
+        localStorage.setItem("userId", res.data.data.user.id);
       navigate("/cuchubal");
     });
   };
