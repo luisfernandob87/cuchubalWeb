@@ -20,7 +20,7 @@ function Cuchubales() {
       <div>
         {cuchubales.map((cuchubal) => (
           <div
-            onClick={() => console.log(cuchubal.id)}
+            onClick={() => navigate(`/cuchubal/manos/${cuchubal.id}`)}
             key={cuchubal.id}
             style={{ marginBottom: "15px" }}
           >

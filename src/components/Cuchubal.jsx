@@ -14,7 +14,7 @@ function Cuchubal() {
       <Side />
       <Routes>
         <Route path="/" element={<Cuchubales />} />
-        <Route path="/manos" element={<Manos />} />
+        <Route path="/manos/:id" element={<Manos />} />
         <Route path="/addCuchubal" element={<AddCuchubal />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
