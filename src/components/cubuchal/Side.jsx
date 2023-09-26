@@ -5,7 +5,7 @@ function Side() {
   return (
     <aside>
       <Link to="/cuchubal">Mis Cuchubales</Link>
-      <Link to="/cuchubal/manos">Mis Manos</Link>
+      <Link to="/cuchubal/misManos">Mis Manos</Link>
       <Link to="/cuchubal/addCuchubal">Crear Cuchubal</Link>
       <Link to="/cuchubal/profile">Perfil</Link>
       <Outlet />

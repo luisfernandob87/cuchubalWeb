@@ -6,6 +6,8 @@ import Cuchubales from "./cubuchal/Cuchubales";
 import Manos from "./cubuchal/Manos";
 import AddCuchubal from "./cubuchal/AddCuchubal";
 import Profile from "./cubuchal/Profile";
+import MisManos from "./cubuchal/MisManos";
+import AddManos from "./cubuchal/AddManos";
 
 function Cuchubal() {
   return (
@@ -17,6 +19,8 @@ function Cuchubal() {
         <Route path="/manos/:id" element={<Manos />} />
         <Route path="/addCuchubal" element={<AddCuchubal />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/misManos" element={<MisManos />} />
+        <Route path="/addManos" element={<AddManos />} />
       </Routes>
     </>
   );

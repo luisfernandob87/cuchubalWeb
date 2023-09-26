@@ -17,9 +17,13 @@ function AddCuchubal() {
   const userId = localStorage.getItem("userId");
 
   const submit = (data) => {
-    axios.post(`${page}/cuchubal`, data).then((res) => {
-      console.log(res);
-      navigate("/cuchubal");
+    // axios.post(`${page}/cuchubal`, data).then((res) => {
+    //   console.log(res);
+    //   navigate("/cuchubal");
+    // });
+    // console.log(data.noParticipantes);
+    navigate("/cuchubal/addManos", {
+      state: { userData: data.noParticipantes },
     });
   };
 
@@ -31,18 +35,25 @@ function AddCuchubal() {
           type="text"
           {...register("nombreCuchubal", { required: true })}
         />
-        <label>Forma de Pago</label>
-        <input type="text" {...register("formaPago", { required: true })} />
+        <label htmlFor="formaPago">Forma de Pago</label>
+        <select id="formaPago" {...register("formaPago", { required: true })}>
+          <option></option>
+          <option value="Mensual">Mensual</option>
+          <option value="Quincenal">Quincenal</option>
+          <option value="Semanal">Semanal</option>
+        </select>
+
         <label>Fecha de Inicio</label>
         <input type="date" {...register("fechaInicio", { required: true })} />
         <label htmlFor="">No. de Participantes</label>
         <input
           type="number"
+          step="0.01"
           {...register("noParticipantes", { required: true })}
         />
         <label htmlFor="">Cuota por Participante</label>
         <input
-          type="number"
+          type=""
           {...register("cuotaPorParticipante", { required: true })}
         />
         <label htmlFor="">Sorteo</label>

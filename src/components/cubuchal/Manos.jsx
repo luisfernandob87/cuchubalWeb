@@ -8,6 +8,7 @@ function Manos() {
   const [manos, setManos] = useState([]);
   const [tipoPago, setTipoPago] = useState([]);
   const [fechaInicio, SetFechaInicio] = useState([]);
+  const [datosCuchubal, setDatosCuchubal] = useState([]);
 
   useEffect(() => {
     axios
@@ -16,45 +17,43 @@ function Manos() {
         (res) => (
           setManos(res.data),
           setTipoPago(res.data[0].cuchubal.formaPago),
-          SetFechaInicio(res.data[0].cuchubal.fechaInicio)
+          SetFechaInicio(res.data[0].cuchubal.fechaInicio),
+          setDatosCuchubal(res.data[0].cuchubal)
         )
       );
   }, []);
 
-  let dias = 0;
+  let agregar = 0;
+  let tipo = "";
 
   if (tipoPago == "Mensual") {
-    dias = 30;
+    agregar = 1;
+    tipo = "month";
   } else if (tipoPago == "Quincenal") {
-    dias = 15;
+    agregar = 2;
+    tipo = "week";
   } else if (tipoPago == "Semanal") {
-    dias = 7;
+    agregar = 1;
+    tipo = "week";
   }
-
-  console.log(manos);
-
-  // function sumarSemanasFecha(fecha, n = 1) {
-  //   return new Date(fecha.setDate(fecha.getDate() + n));
-  // }
-
-  let anio = moment(fechaInicio).format("YYYY");
-  let mes = moment(fechaInicio).format("MM");
-  let dia = moment(fechaInicio).format("DD");
-
-  let fecha = new Date(anio, mes, dia);
-  console.log(moment(fecha).format("DD/MM/YYYY"));
-
-  // let resultado = sumarSemanasFecha(fecha, dias);
-  // console.log(moment(resultado).format("DD/MM/YYYY"));
-
   return (
     <section>
+      <h3>{datosCuchubal.nombreCuchubal}</h3>
+      <h4>
+        Fecha de inicio:{" "}
+        {moment(datosCuchubal.fechaInicio).format("DD/MM/YYYY")}
+      </h4>
       {manos.map((mano) => (
         <div key={mano.id}>
           <h4>{mano.usuario.nombre}</h4>
           <p>{mano.usuario.correo}</p>
-          <p>{moment(mano.cuchubal.fechaInicio).format("DD/MM/YYYY")}</p>
-          <p>{mano.numeroCuota}</p>
+          <p>Número de cuota: {mano.numeroCuota}</p>
+          <p>
+            Fecha a pagar:{" "}
+            {moment(fechaInicio)
+              .add(mano.numeroCuota * agregar - agregar, tipo)
+              .format("DD/MM/YYYY")}
+          </p>
         </div>
       ))}
     </section>
