@@ -23,7 +23,7 @@ function AddCuchubal() {
     // });
     // console.log(data.noParticipantes);
     navigate("/cuchubal/addManos", {
-      state: { userData: data.noParticipantes },
+      state: { userData: data },
     });
   };
 
