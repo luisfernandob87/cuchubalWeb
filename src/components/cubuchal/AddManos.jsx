@@ -1,31 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 function AddManos() {
   const { state } = useLocation();
 
-  console.log(state);
+  const [mail, setMail] = useState("");
 
-  const y = state.userData.noParticipantes;
+  // console.log(mail);
 
-  const sorteo = state.userData.sorteo;
+  const y = state[0].userData.noParticipantes;
 
-  console.log(sorteo);
+  const sorteo = state[0].userData.sorteo;
+
+  const cuchu = state[1].userData;
+
+  const userId = localStorage.getItem("userId");
 
   const arrayInputs = [];
   const add = (y) => {
     for (y; y > 0; y--) {
       arrayInputs.push(y);
-      console.log(arrayInputs);
+      // console.log(arrayInputs);
     }
   };
   add(y);
+
+  const handlechange = (event) => {
+    setMail(event.target.value);
+  };
+
+  const handleClick = (event) => {
+    console.log(mail);
+  };
 
   return (
     <>
       {arrayInputs.map((input) => (
         <div key={input}>
-          <input type="text" placeholder="Correo" />
+          <input type="text" placeholder="Correo" onChange={handlechange} />
           <br />
           <input
             type="number"
@@ -34,6 +47,7 @@ function AddManos() {
           />
         </div>
       ))}
+      <button onClick={handleClick}>Guardar</button>
     </>
   );
 }

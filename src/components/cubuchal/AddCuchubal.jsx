@@ -17,14 +17,13 @@ function AddCuchubal() {
   const userId = localStorage.getItem("userId");
 
   const submit = (data) => {
-    // axios.post(`${page}/cuchubal`, data).then((res) => {
-    //   console.log(res);
-    //   navigate("/cuchubal");
-    // });
-    // console.log(data.noParticipantes);
-    navigate("/cuchubal/addManos", {
-      state: { userData: data },
+    axios.post(`${page}/cuchubal`, data).then((res) => {
+      console.log(res);
+      navigate("/cuchubal/addManos", {
+        state: [{ userData: data }, { userData: res.data.id }],
+      });
     });
+    // console.log(data.noParticipantes);
   };
 
   return (
