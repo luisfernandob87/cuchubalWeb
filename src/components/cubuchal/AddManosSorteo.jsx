@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 function AddManos() {
   const { state } = useLocation();
-  const [mail, setMail] = useState("");
+  const [emails, setEmails] = useState({});
   const [selectedNumbers, setSelectedNumbers] = useState({});
-  const [emails, setEmails] = useState({}); // Estado para los correos
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [randomNumbers, setRandomNumbers] = useState({}); // Estado para números aleatorios
+
+  const navigate = useNavigate();
 
   const y = state[0].userData.noParticipantes;
   const sorteo = state[0].userData.sorteo;
   const cuchu = state[1].userData;
-  const userId = localStorage.getItem("userId");
-
-  const correo = localStorage.getItem("email");
 
   const arrayInputs = [];
   const add = (y) => {
@@ -26,8 +26,6 @@ function AddManos() {
 
   const handleNumberChange = (event, index) => {
     const { value } = event.target;
-
-    // Actualizar el número seleccionado
     setSelectedNumbers((prevSelectedNumbers) => ({
       ...prevSelectedNumbers,
       [index]: value,
@@ -36,56 +34,113 @@ function AddManos() {
 
   const handleEmailChange = (event, index) => {
     const { value } = event.target;
-
-    // Actualizar el correo para cada índice
     setEmails((prevEmails) => ({
       ...prevEmails,
       [index]: value,
     }));
   };
 
-  // Validar que todos los números sean únicos y dentro del rango
   useEffect(() => {
     const values = Object.values(selectedNumbers);
     const emailValues = Object.values(emails);
 
-    // Verificar si hay valores duplicados
     const hasDuplicates = new Set(values).size !== values.length;
-
-    // Verificar si todos los valores están dentro del rango válido
     const allInRange = values.every((value) => value >= 1 && value <= Math.max(...arrayInputs));
-
-    // Verificar si todos los campos están completos
     const allFieldsFilled = values.length === arrayInputs.length && values.every((value) => value !== "");
     const allEmailsFilled = emailValues.length === arrayInputs.length && emailValues.every((value) => value !== "");
 
-    // Habilitar o deshabilitar el botón según la validación
     setIsButtonDisabled(hasDuplicates || !allInRange || !allFieldsFilled || !allEmailsFilled);
   }, [selectedNumbers, arrayInputs, emails]);
 
-  // Inicializar el campo de correo en el primer input con el valor almacenado en localStorage
-  useEffect(() => {
-    if (correo) {
-      setMail(correo);
-    }
-  }, [correo]);
-
-  const handleClick = () => {
-    console.log(mail, selectedNumbers);
+  const generateToken = () => {
+    return Math.random().toString(36).substr(2);
   };
 
-  // Función para generar números aleatorios únicos
+  const checkAndCreateUser = (mail) => {
+    return fetch(`http://localhost:3000/usuario`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ correo: mail }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data === null) {
+          console.log(`El usuario ${mail} no existe. Creando usuario...`);
+          const token = generateToken();
+          return fetch(`http://localhost:3000/signup`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              nombre: mail,
+              correo: mail,
+              password: token,
+            }),
+          })
+            .then(signupResponse => signupResponse.json())
+            .then(signupData => {
+              console.log(`Usuario ${mail} creado:`, signupData);
+              return signupData.id;
+            });
+        } else {
+          console.log(`El usuario ${mail} ya existe.`);
+          return data.id;
+        }
+      })
+      .catch(error => {
+        console.error(`Error al verificar o crear el usuario ${mail}:`, error);
+      });
+  };
+
+  const insertCuota = (numeroCuota, idUsuario) => {
+    return fetch(`http://localhost:3000/cuota`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        numeroCuota: numeroCuota,
+        idCuchubal: cuchu,
+        idUsuario: idUsuario,
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(`Cuota insertada para usuario ${idUsuario}:`, data);
+        return data;
+      })
+      .catch(error => {
+        console.error(`Error al insertar la cuota para el usuario ${idUsuario}:`, error);
+      });
+  };
+
+  const handleClick = () => {
+    Promise.all(Object.entries(emails).map(([index, mail]) =>
+      checkAndCreateUser(mail).then(idUsuario =>
+        insertCuota(selectedNumbers[index], idUsuario)
+      )
+    ))
+      .then(results => {
+        console.log("Todas las cuotas han sido insertadas:", results);
+        navigate("/cuchubal");
+      })
+      .catch(error => {
+        console.error("Error al procesar las cuotas:", error);
+      });
+  };
+
   const generateUniqueRandomNumbers = () => {
     const max = Math.max(...arrayInputs);
     const numbers = new Set();
 
-    // Generar números únicos hasta que tengamos el tamaño requerido
     while (numbers.size < arrayInputs.length) {
       const random = Math.floor(Math.random() * max) + 1;
       numbers.add(random);
     }
 
-    // Convertir el Set en un array y asignar los números a cada índice
     const uniqueNumbers = Array.from(numbers);
     const newRandomNumbers = {};
     arrayInputs.forEach((input, index) => {
@@ -93,12 +148,9 @@ function AddManos() {
     });
 
     setRandomNumbers(newRandomNumbers);
-
-    // Asignar los números aleatorios generados al estado selectedNumbers
     setSelectedNumbers(newRandomNumbers);
   };
 
-  // Encontrar el valor más alto del arrayInputs
   const maxValue = Math.max(...arrayInputs);
 
   return (
@@ -108,20 +160,19 @@ function AddManos() {
           <input
             type="text"
             placeholder="Correo"
-            value={emails[index] || ""}  // Mostrar el correo ingresado
-            onChange={(event) => handleEmailChange(event, index)} // Actualizar correo
+            value={emails[index] || ""}
+            onChange={(event) => handleEmailChange(event, index)}
           />
           <br />
           <input
             type="number"
             placeholder="Número de Cuota"
             hidden={sorteo === true}
-            max={maxValue}  // Limitar el número de cuota al máximo valor de arrayInputs
-            min={1}  // Evitar que el número de cuota sea menor de 1
-            value={selectedNumbers[index] || ""}  // Mostrar el número aleatorio generado
-            onChange={(event) => handleNumberChange(event, index)} // Actualizar número seleccionado
+            max={maxValue}
+            min={1}
+            value={selectedNumbers[index] || ""}
+            onChange={(event) => handleNumberChange(event, index)}
           />
-          {/* Mostrar el número aleatorio */}
           {randomNumbers[index] !== undefined && <label>{randomNumbers[index]}</label>}
         </div>
       ))}

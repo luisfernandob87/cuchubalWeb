@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 function AddManos() {
   const { state } = useLocation();
-  const [mail, setMail] = useState("");
-  const [selectedNumbers, setSelectedNumbers] = useState({}); // Estado para guardar los números seleccionados
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true); // Estado para controlar si el botón está habilitado o no
+  const [mails, setMails] = useState([]);
+  const [selectedNumbers, setSelectedNumbers] = useState({});
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  
+  const navigate = useNavigate();
 
   const y = state[0].userData.noParticipantes;
   const sorteo = state[0].userData.sorteo;
@@ -20,57 +25,129 @@ function AddManos() {
   };
   add(y);
 
-  const handlechange = (event) => {
-    setMail(event.target.value);
+  const handleMailChange = (index, event) => {
+    const updatedMails = [...mails];
+    updatedMails[index] = event.target.value;
+    setMails(updatedMails);
   };
 
   const handleNumberChange = (event, index) => {
     const { value } = event.target;
-
-    // Actualizar el número seleccionado
     setSelectedNumbers((prevSelectedNumbers) => ({
       ...prevSelectedNumbers,
       [index]: value,
     }));
   };
 
-  // Validar que todos los números sean únicos y dentro del rango
   useEffect(() => {
     const values = Object.values(selectedNumbers);
-
-    // Verificar si hay valores duplicados
     const hasDuplicates = new Set(values).size !== values.length;
-
-    // Verificar si todos los valores están dentro del rango válido
     const allInRange = values.every((value) => value >= 1 && value <= Math.max(...arrayInputs));
-
-    // Verificar si todos los campos están llenos
     const allFieldsFilled = Object.keys(selectedNumbers).length === arrayInputs.length;
+    const allMailsFilled = mails.length === arrayInputs.length && mails.every(mail => mail);
+    setIsButtonDisabled(hasDuplicates || !allInRange || !allFieldsFilled || !allMailsFilled);
+  }, [selectedNumbers, arrayInputs, mails]);
 
-    // Habilitar o deshabilitar el botón según la validación
-    setIsButtonDisabled(hasDuplicates || !allInRange || !allFieldsFilled || !mail);
-  }, [selectedNumbers, arrayInputs, mail]);
-
-  const handleClick = () => {
-    console.log(mail, selectedNumbers, cuchu);
+  const generateToken = () => {
+    return Math.random().toString(36).substr(2);
   };
 
-  // Encontrar el valor más alto del arrayInputs
+  const checkAndCreateUser = (mail) => {
+    return fetch(`http://localhost:3000/usuario`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ correo: mail }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data === null) {
+          console.log(`El usuario ${mail} no existe. Creando usuario...`);
+          const token = generateToken();
+          return fetch(`http://localhost:3000/signup`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              nombre: mail,
+              correo: mail,
+              password: token,
+            }),
+          })
+            .then(signupResponse => signupResponse.json())
+            .then(signupData => {
+              console.log(`Usuario ${mail} creado:`, signupData);
+              return signupData.id; // Retorna el id del usuario recién creado
+            });
+        } else {
+          console.log(`El usuario ${mail} ya existe.`);
+          return data.id; // Retorna el id del usuario existente
+        }
+      })
+      .catch(error => {
+        console.error(`Error al verificar o crear el usuario ${mail}:`, error);
+      });
+  };
+
+  const insertCuota = (numeroCuota, idUsuario) => {
+    return fetch(`http://localhost:3000/cuota`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        numeroCuota: numeroCuota,
+        idCuchubal: cuchu,
+        idUsuario: idUsuario,
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(`Cuota insertada para usuario ${idUsuario}:`, data);
+        return data;
+      })
+      .catch(error => {
+        console.error(`Error al insertar la cuota para el usuario ${idUsuario}:`, error);
+      });
+  };
+
+  const handleClick = () => {
+    Promise.all(mails.map((mail, index) =>
+      checkAndCreateUser(mail).then(idUsuario =>
+        insertCuota(selectedNumbers[index], idUsuario)
+      )
+    ))
+      .then(results => {
+        console.log("Todas las cuotas han sido insertadas:", results);
+        navigate("/cuchubal");
+      })
+      .catch(error => {
+        console.error("Error al procesar las cuotas:", error);
+      });
+  };
+
   const maxValue = Math.max(...arrayInputs);
 
   return (
     <>
       {arrayInputs.map((input, index) => (
         <div key={input}>
-          <input type="text" placeholder="Correo" onChange={handlechange} />
+          <input
+            type="text"
+            placeholder="Correo"
+            value={mails[index] || ""}
+            onChange={(event) => handleMailChange(index, event)}
+          />
           <br />
           <input
             type="number"
             placeholder="Número de Cuota"
             hidden={sorteo === true}
-            max={maxValue}  // Limitar el número de cuota al máximo valor de arrayInputs
-            min={1}  // Evitar que el número de cuota sea menor de 1
-            onChange={(event) => handleNumberChange(event, index)} // Actualizar número seleccionado
+            max={maxValue}
+            min={1}
+            onChange={(event) => handleNumberChange(event, index)}
           />
         </div>
       ))}

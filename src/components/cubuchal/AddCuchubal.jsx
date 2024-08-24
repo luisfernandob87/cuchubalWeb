@@ -20,6 +20,7 @@ function AddCuchubal() {
     axios.post(`${page}/cuchubal`, data).then((res) => {
       console.log(res);
 
+      
       // Verificar el valor del checkbox
       const isSorteo = getValues("sorteo");
 
