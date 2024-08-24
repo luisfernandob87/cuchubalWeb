@@ -8,22 +8,32 @@ function AddCuchubal() {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm();
 
   const navigate = useNavigate();
 
   const page = "http://localhost:3000";
-
   const userId = localStorage.getItem("userId");
 
   const submit = (data) => {
     axios.post(`${page}/cuchubal`, data).then((res) => {
       console.log(res);
-      navigate("/cuchubal/addManos", {
-        state: [{ userData: data }, { userData: res.data.id }],
-      });
+
+      // Verificar el valor del checkbox
+      const isSorteo = getValues("sorteo");
+
+      // Redirigir según el valor del checkbox
+      if (isSorteo) {
+        navigate("/cuchubal/addManosSorteo", {
+          state: [{ userData: data }, { userData: res.data.id }],
+        });
+      } else {
+        navigate("/cuchubal/addManos", {
+          state: [{ userData: data }, { userData: res.data.id }],
+        });
+      }
     });
-    // console.log(data.noParticipantes);
   };
 
   return (
@@ -52,7 +62,7 @@ function AddCuchubal() {
         />
         <label htmlFor="">Cuota por Participante</label>
         <input
-          type=""
+          type="text"
           {...register("cuotaPorParticipante", { required: true })}
         />
         <label htmlFor="">Sorteo</label>
