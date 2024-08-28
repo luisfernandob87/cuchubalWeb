@@ -58,7 +58,6 @@ function AddCuchubal() {
         <label htmlFor="">No. de Participantes</label>
         <input
           type="number"
-          step="0.01"
           {...register("noParticipantes", { required: true })}
         />
         <label htmlFor="">Cuota por Participante</label>
