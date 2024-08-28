@@ -65,7 +65,7 @@ function AddManos() {
         if (data === null) {
           console.log(`El usuario ${mail} no existe. Creando usuario...`);
           const token = generateToken();
-          return fetch(`http://localhost:3000/signup`, {
+          return fetch(`http://localhost:3000/addManos`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
