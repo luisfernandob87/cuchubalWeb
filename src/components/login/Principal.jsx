@@ -50,7 +50,7 @@ function Principal() {
       >
         Crear Cuenta
       </a>
-      <a href="#">Reiniciar Contraseña</a>
+      <a onClick={()=> {navigate("/restart")}}>Reiniciar Contraseña</a>
     </>
   );
 }
