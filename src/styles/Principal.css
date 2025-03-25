@@ -1,0 +1,15 @@
+.principal-container {
+  font-family: 'Arial', sans-serif;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 5%;
+  background-color: #f9f9f9;
+}
+
+/* Estos estilos son generales, los componentes específicos tendrán sus propios estilos */

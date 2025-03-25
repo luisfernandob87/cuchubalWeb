@@ -12,7 +12,10 @@ function Cuchubales() {
   useEffect(() => {
     axios
       .get(`http://localhost:3000/cuchubales/${userId}`)
-      .then((res) => setCuchubales(res.data));
+      .then((res) => {
+        const sortedCuchubales = res.data.sort((a, b) => b.id - a.id);
+        setCuchubales(sortedCuchubales);
+      });
   }, []);
 
   return (

@@ -1,43 +1,21 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "../../styles/Footer.css";
 
 function Footer() {
-  const anio = new Date().getFullYear();
-  const navigate = useNavigate();
   return (
-    <footer>
-      <div className="linkFooter">
-        <a
-          onClick={() => {
-            navigate("/functions");
-          }}
-        >
-          Funciones
-        </a>
-        <a
-          onClick={() => {
-            navigate("/faq");
-          }}
-        >
-          Preguntas Frecuentes
-        </a>
-        <a
-          onClick={() => {
-            navigate("/confidentiality");
-          }}
-        >
-          Politica de confidencialidad
-        </a>
-        <a
-          onClick={() => {
-            navigate("/contact");
-          }}
-        >
-          Contacto
-        </a>
+    <footer className="footer">
+      <div className="footer-links">
+        <Link to="/funciones">Funciones</Link>
+        <Link to="/preguntas-frecuentes">Preguntas Frecuentes</Link>
+        <Link to="/politica-confidencialidad">Política de confidencialidad</Link>
+        <Link to="/contactanos">Contáctanos</Link>
       </div>
-      <p>Todos los derechos reservados, {anio}</p>
+      <div className="footer-copyright">
+        © Todos los derechos reservados, 2022
+      </div>
     </footer>
   );
 }
+
 export default Footer;

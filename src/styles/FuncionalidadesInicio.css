@@ -1,0 +1,53 @@
+.funcionalidades-container {
+  padding: 3rem 5%;
+  text-align: center;
+}
+
+.funcionalidades-container h2 {
+  font-size: 2rem;
+  color: #c4e538;
+  margin-bottom: 3rem;
+}
+
+.funcionalidades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.funcionalidad-card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 2rem 1.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: white;
+}
+
+.funcionalidad-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.icon-container {
+  width: 80px;
+  height: 80px;
+  background-color: #4a9f7b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.icon-container svg {
+  font-size: 2rem;
+  color: white;
+}
+
+.funcionalidad-card h3 {
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.5;
+}

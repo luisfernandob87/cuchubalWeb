@@ -4,16 +4,19 @@ import FuncionalidadesInicio from "./inicio/FuncionalidadesInicio";
 import InfoInicio from "./inicio/InfoInicio";
 import MenuInicio from "./inicio/MenuInicio";
 import RotuloInicio from "./inicio/RotuloInicio";
+import "../styles/Principal.css";
 
 function Principal() {
   return (
-    <>
+    <div className="principal-container">
       <MenuInicio />
-      <InfoInicio />
+      <div className="hero-section">
+        <InfoInicio />
+      </div>
       <RotuloInicio />
       <FuncionalidadesInicio />
       <Footer />
-    </>
+    </div>
   );
 }
 export default Principal;

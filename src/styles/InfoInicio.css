@@ -1,0 +1,43 @@
+.info-inicio-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 2rem 0;
+}
+
+.info-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.info-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.info-text {
+  flex: 1;
+  text-align: right;
+  padding: 0 2rem;
+}
+
+.gratis-tag {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #c4e538;
+  margin-bottom: 1rem;
+}
+
+.info-text h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.info-text p {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+}
