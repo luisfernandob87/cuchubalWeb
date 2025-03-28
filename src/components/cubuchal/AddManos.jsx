@@ -2,20 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-
 function AddManos() {
   const { state } = useLocation();
   const [mails, setMails] = useState([]);
   const [selectedNumbers, setSelectedNumbers] = useState({});
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-  
   const navigate = useNavigate();
 
   const y = state[0].userData.noParticipantes;
   const sorteo = state[0].userData.sorteo;
   const cuchu = state[1].userData;
-  const userId = localStorage.getItem("userId");
 
   const arrayInputs = [];
   const add = (y) => {
@@ -52,43 +49,47 @@ function AddManos() {
     return Math.random().toString(36).substr(2);
   };
 
-  const checkAndCreateUser = (mail) => {
-    return fetch(`http://localhost:3000/usuario`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ correo: mail }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data === null) {
-          console.log(`El usuario ${mail} no existe. Creando usuario...`);
-          const token = generateToken();
-          return fetch(`http://localhost:3000/addManos`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              nombre: mail,
-              correo: mail,
-              password: token,
-            }),
-          })
-            .then(signupResponse => signupResponse.json())
-            .then(signupData => {
-              console.log(`Usuario ${mail} creado:`, signupData);
-              return signupData.id; // Retorna el id del usuario recién creado
-            });
-        } else {
-          console.log(`El usuario ${mail} ya existe.`);
-          return data.id; // Retorna el id del usuario existente
-        }
-      })
-      .catch(error => {
-        console.error(`Error al verificar o crear el usuario ${mail}:`, error);
+  const checkAndCreateUser = async (mail) => {
+    try {
+      const response = await fetch(`http://localhost:3000/usuario`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ correo: mail }),
       });
+      const data = await response.json();
+
+      if (data === null) {
+        console.log(`El usuario ${mail} no existe. Creando usuario...`);
+        const token = generateToken();
+        const signupResponse = await fetch(`http://localhost:3000/signup`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nombre: mail,
+            correo: mail,
+            password: token,
+          }),
+        });
+
+        if (!signupResponse.ok) {
+          throw new Error("Failed to create user");
+        }
+
+        const signupData = await signupResponse.json();
+        console.log(`Usuario ${mail} creado:`, signupData);
+        return signupData.id;
+      } else {
+        console.log(`El usuario ${mail} ya existe.`);
+        return data.id;
+      }
+    } catch (error) {
+      console.error(`Error al verificar o crear el usuario ${mail}:`, error);
+      throw error;
+    }
   };
 
   const insertCuota = (numeroCuota, idUsuario) => {
