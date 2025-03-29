@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import "./AddCuchubal.css";
 
 function AddCuchubal() {
   const {
@@ -20,11 +21,8 @@ function AddCuchubal() {
     axios.post(`${page}/cuchubal`, data).then((res) => {
       console.log(res);
 
-      
-      // Verificar el valor del checkbox
       const isSorteo = getValues("sorteo");
 
-      // Redirigir según el valor del checkbox
       if (isSorteo) {
         navigate("/cuchubal/addManosSorteo", {
           state: [{ userData: data }, { userData: res.data.id }],
@@ -38,40 +36,68 @@ function AddCuchubal() {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(submit)}>
-        <label>Nombre de Cuchubal</label>
+    <div className="add-cuchubal-container">
+      <h1 className="title">Crear Cuchubal</h1>
+      <form onSubmit={handleSubmit(submit)} className="form">
+        <label className="label">Nombre del Cuchubal</label>
         <input
           type="text"
+          className="input"
           {...register("nombreCuchubal", { required: true })}
         />
-        <label htmlFor="formaPago">Forma de Pago</label>
-        <select id="formaPago" {...register("formaPago", { required: true })}>
-          <option></option>
+
+        <label className="label">Selecciona el Periodo de Pago</label>
+        <select
+          className="input"
+          {...register("formaPago", { required: true })}
+        >
+          <option value="">--Selecciona Periodo--</option>
           <option value="Mensual">Mensual</option>
           <option value="Quincenal">Quincenal</option>
           <option value="Semanal">Semanal</option>
         </select>
 
-        <label>Fecha de Inicio</label>
-        <input type="date" {...register("fechaInicio", { required: true })} />
-        <label htmlFor="">No. de Participantes</label>
+        <label className="label">Fecha de Inicio</label>
+        <input
+          type="date"
+          className="input"
+          {...register("fechaInicio", { required: true })}
+        />
+
+        <label className="label">No. de Participantes</label>
         <input
           type="number"
+          className="input"
           {...register("noParticipantes", { required: true })}
         />
-        <label htmlFor="">Cuota por Participante</label>
+
+        <label className="label">Cuota por Participante</label>
         <input
           type="text"
+          className="input"
           {...register("cuotaPorParticipante", { required: true })}
         />
-        <label htmlFor="">Sorteo</label>
-        <input type="checkbox" {...register("sorteo")} />
-        <input type="hidden" defaultValue={userId} {...register("idUsuario")} />
+
+        <label className="label">Sorteo</label>
+        <input
+          type="checkbox"
+          className="checkbox"
+          {...register("sorteo")}
+        />
+
+        <input
+          type="hidden"
+          defaultValue={userId}
+          {...register("idUsuario")}
+        />
+
         {errors.exampleRequired && <span>El campo es requerido</span>}
-        <input type="submit" value="Enviar" />
+
+        <button type="submit" className="submit-button">
+          Crear Cuchubal
+        </button>
       </form>
-    </>
+    </div>
   );
 }
 
