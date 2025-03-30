@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../../styles/Footer.css";
 
 function Footer() {
+  const currentYear = new Date().getFullYear(); // Obtiene el año actual
   return (
     <footer className="footer">
       <div className="footer-links">
@@ -12,7 +13,7 @@ function Footer() {
         <Link to="/contactanos">Contáctanos</Link>
       </div>
       <div className="footer-copyright">
-        © Todos los derechos reservados, 2022
+        © Todos los derechos reservados, {currentYear}.
       </div>
     </footer>
   );
