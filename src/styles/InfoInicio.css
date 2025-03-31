@@ -1,5 +1,6 @@
 .info-inicio-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -13,14 +14,14 @@
 }
 
 .info-image img {
-  max-width: 100%;
-  height: auto;
+  min-width: 200px;
 }
 
 .info-text {
   flex: 1;
-  text-align: right;
+  text-align: center;
   padding: 0 2rem;
+  min-width: 300px;
 }
 
 .gratis-tag {
@@ -28,11 +29,14 @@
   font-weight: bold;
   color: #c4e538;
   margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 .info-text h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  /* margin-bottom: 1.5rem; */
   color: #333;
 }
 

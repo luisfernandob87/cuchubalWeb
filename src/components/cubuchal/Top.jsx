@@ -13,6 +13,7 @@ function Top() {
   const username = localStorage.getItem("usuario");
 
   return (
+      <div className="principal-container">
     <header>
       <nav>
         <img src={imagen} alt="Logo" />
@@ -20,6 +21,7 @@ function Top() {
         <button onClick={cerrarSesion}>Cerrar Sesión</button>
       </nav>
     </header>
+    </div>
   );
 }
 

@@ -34,7 +34,6 @@ function Principal() {
           navigate("/");
         }}
       />
-      <h4>Crea y administra tus cuchubales</h4>
       <form onSubmit={handleSubmit(submit)} className="form-container">
         <input
           type="email"
@@ -50,10 +49,9 @@ function Principal() {
         />
         {errors.exampleRequired && <span>El campo es requerido</span>}
 
-        <button type="submit" className="form-button">
+        <button type="submit" className="btnLogin">
           Iniciar Sesión
         </button>
-      </form>
       <div className="links-container">
         <span
           className="link"
@@ -72,6 +70,7 @@ function Principal() {
           Reiniciar Contraseña
         </span>
       </div>
+      </form>
     </div>
   );
 }

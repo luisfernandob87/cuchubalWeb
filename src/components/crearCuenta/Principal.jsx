@@ -34,7 +34,6 @@ function Principal() {
           navigate("/");
         }}
       />
-      <h4 className="crearCuenta-title">Crea y administra tus cuchubales</h4>
       <form onSubmit={handleSubmit(submit)} className="crearCuenta-form">
         <input
           placeholder="Nombre"

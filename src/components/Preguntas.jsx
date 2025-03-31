@@ -5,11 +5,12 @@ import Principal from "./preguntas/Principal";
 
 function Preguntas() {
   return (
-    <>
+    <div className="principal-container">
+    
       <MenuInicio />
       <Principal />
       <Footer />
-    </>
+    </div>
   );
 }
 

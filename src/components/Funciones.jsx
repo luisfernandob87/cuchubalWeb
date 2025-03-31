@@ -5,11 +5,11 @@ import Principal from "./funciones/Principal";
 
 function Funciones() {
   return (
-    <>
+    <div className="principal-container">
       <MenuInicio />
       <Principal />
       <Footer />
-    </>
+    </div>
   );
 }
 
