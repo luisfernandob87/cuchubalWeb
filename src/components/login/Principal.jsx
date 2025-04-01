@@ -26,6 +26,7 @@ function Principal() {
 
   return (
     <div className="login-container">
+      <form onSubmit={handleSubmit(submit)} className="form-container">
       <img
         src={imagen}
         alt="Logo"
@@ -34,7 +35,6 @@ function Principal() {
           navigate("/");
         }}
       />
-      <form onSubmit={handleSubmit(submit)} className="form-container">
         <input
           type="email"
           placeholder="Correo Electrónico"

@@ -32,6 +32,9 @@ header nav {
   align-items: center;
   gap: 2rem;
 }
+a{
+  cursor: pointer;
+}
 
 .hamburger-menu {
   display: none;

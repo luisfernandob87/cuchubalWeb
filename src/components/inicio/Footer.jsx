@@ -7,10 +7,10 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer-links">
-        <Link to="/funciones">Funciones</Link>
-        <Link to="/preguntas-frecuentes">Preguntas Frecuentes</Link>
-        <Link to="/politica-confidencialidad">Política de confidencialidad</Link>
-        <Link to="/contactanos">Contáctanos</Link>
+        <Link to="/functions">Funciones</Link>
+        <Link to="/faq">Preguntas Frecuentes</Link>
+        <Link to="/confidentiality">Política de confidencialidad</Link>
+        <Link to="/contact">Contáctanos</Link>
       </div>
       <div className="footer-copyright">
         © Todos los derechos reservados, {currentYear}.

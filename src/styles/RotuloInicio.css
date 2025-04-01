@@ -8,6 +8,8 @@
   font-size: 2rem;
   color: #c4e538;
   margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  
 }
 
 .rotulo-inicio p {

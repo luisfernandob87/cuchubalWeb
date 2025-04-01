@@ -1,0 +1,48 @@
+.top-principal-container {
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* padding: 0.5rem; */
+}
+
+.top-header {
+  /* padding: 0.5rem 1rem; */
+}
+
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  /* padding: 0.5rem 0; */
+}
+
+.top-logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.top-logo {
+  height: 40px;
+  width: auto;
+}
+
+.top-greeting {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.top-logout-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.top-logout-btn:hover {
+  background-color: #c82333;
+}
