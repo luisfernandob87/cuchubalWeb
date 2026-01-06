@@ -1,0 +1,35 @@
+.dashboard-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: radial-gradient(circle at top left, #1e1b4b, #0f172a 60%, #020617);
+}
+
+.dashboard-container {
+    display: flex;
+    flex: 1;
+    padding-top: 80px;
+    /* Space for Top header */
+}
+
+.dashboard-main-content {
+    flex: 1;
+    margin-left: 280px;
+    /* Space for Sidebar */
+    padding: 2.5rem;
+    min-height: calc(100vh - 80px);
+    transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .dashboard-main-content {
+        margin-left: 80px;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-main-content {
+        padding: 1rem;
+    }
+}

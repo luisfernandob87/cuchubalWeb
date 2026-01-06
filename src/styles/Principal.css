@@ -1,15 +1,66 @@
 .principal-container {
-  font-family: 'Arial', sans-serif;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-.hero-section {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 2rem 5%;
-  background-color: white;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* Estos estilos son generales, los componentes específicos tendrán sus propios estilos */
+main {
+  flex: 1;
+}
+
+.cta-section {
+  padding: 80px 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cta-card {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid var(--glass-border);
+  border-radius: 32px;
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.cta-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.cta-content h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  max-width: 600px;
+}
+
+.cta-content p {
+  color: var(--text-muted);
+  font-size: 1.125rem;
+  max-width: 500px;
+}
+
+.cta-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  background: var(--primary);
+  filter: blur(150px);
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .cta-content h2 {
+    font-size: 1.75rem;
+  }
+}

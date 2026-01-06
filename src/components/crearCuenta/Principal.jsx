@@ -1,9 +1,10 @@
 import React from "react";
-import imagen from "../../assets/react.svg";
+import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../api/axios";
 import { useForm } from "react-hook-form";
-import "./Principal.css"; // Import the new CSS file
+import { FiUser, FiMail, FiLock, FiCheckCircle, FiArrowRight } from "react-icons/fi";
+import "./Principal.css";
 
 function Principal() {
   const navigate = useNavigate();
@@ -14,84 +15,93 @@ function Principal() {
     formState: { errors },
   } = useForm();
 
-  const page = "http://localhost:3000";
-
   const submit = (data) => {
-    axios.post(`${page}/signup`, data).then((res) => {
+    api.post("/signup", data).then((res) => {
       navigate("/login");
+    }).catch(err => {
+      console.error("Signup error", err);
     });
   };
 
   const password = watch("password");
 
   return (
-    <div className="crearCuenta-container">
-      <img
-        src={imagen}
-        alt="Logo"
-        className="crearCuenta-logo"
-        onClick={() => {
-          navigate("/");
-        }}
-      />
-      <form onSubmit={handleSubmit(submit)} className="crearCuenta-form">
-        <input
-          placeholder="Nombre"
-          type="text"
-          {...register("nombre", { required: "El nombre es requerido" })}
-          className="crearCuenta-input"
+    <div className="register-card animate-fade-in">
+      <div className="register-header">
+        <img
+          src={logo}
+          alt="Cuchubal Logo"
+          className="register-logo"
+          onClick={() => navigate("/")}
         />
-        {errors.nombre && (
-          <span className="crearCuenta-error">{errors.nombre.message}</span>
-        )}
-        <input
-          placeholder="Correo Electrónico"
-          type="email"
-          {...register("correo", { required: "El correo es requerido" })}
-          className="crearCuenta-input"
-        />
-        {errors.correo && (
-          <span className="crearCuenta-error">{errors.correo.message}</span>
-        )}
-        <input
-          placeholder="Contraseña"
-          type="password"
-          {...register("password", { required: "La contraseña es requerida" })}
-          className="crearCuenta-input"
-        />
-        {errors.password && (
-          <span className="crearCuenta-error">{errors.password.message}</span>
-        )}
-        <input
-          placeholder="Validar Contraseña"
-          type="password"
-          {...register("confirmPassword", {
-            required: "La confirmación de contraseña es requerida",
-            validate: (value) =>
-              value === password || "Las contraseñas no coinciden",
-          })}
-          className="crearCuenta-input"
-        />
-        {errors.confirmPassword && (
-          <span className="crearCuenta-error">
-            {errors.confirmPassword.message}
-          </span>
-        )}
-        <button type="submit" className="crearCuenta-submitButton">
-          Crear Cuenta
-        </button>
-      </form>
-      <div className="crearCuenta-links">
-        <span onClick={() => navigate("/login")} className="crearCuenta-link">
-          Iniciar Sesión
-        </span>
-        <span
-          onClick={() => navigate("/reset-password")}
-          className="crearCuenta-link"
-        >
-          Reiniciar Contraseña
-        </span>
+        <h1>Únete a Cuchubal</h1>
+        <p>Empieza a ahorrar en comunidad hoy mismo.</p>
       </div>
+
+      <form onSubmit={handleSubmit(submit)} className="register-form">
+        <div className="input-grid">
+          <div className="input-group">
+            <FiUser className="input-icon" />
+            <input
+              placeholder="Nombre Completo"
+              type="text"
+              {...register("nombre", { required: "El nombre es requerido" })}
+              className={`form-input ${errors.nombre ? "error" : ""}`}
+            />
+            {errors.nombre && <span className="error-message">{errors.nombre.message}</span>}
+          </div>
+
+          <div className="input-group">
+            <FiMail className="input-icon" />
+            <input
+              placeholder="Correo Electrónico"
+              type="email"
+              {...register("correo", { required: "El correo es requerido" })}
+              className={`form-input ${errors.correo ? "error" : ""}`}
+            />
+            {errors.correo && <span className="error-message">{errors.correo.message}</span>}
+          </div>
+
+          <div className="input-group">
+            <FiLock className="input-icon" />
+            <input
+              placeholder="Contraseña"
+              type="password"
+              {...register("password", { required: "La contraseña es requerida" })}
+              className={`form-input ${errors.password ? "error" : ""}`}
+            />
+            {errors.password && <span className="error-message">{errors.password.message}</span>}
+          </div>
+
+          <div className="input-group">
+            <FiCheckCircle className="input-icon" />
+            <input
+              placeholder="Confirmar Contraseña"
+              type="password"
+              {...register("confirmPassword", {
+                required: "La confirmación es requerida",
+                validate: (value) => value === password || "Las contraseñas no coinciden",
+              })}
+              className={`form-input ${errors.confirmPassword ? "error" : ""}`}
+            />
+            {errors.confirmPassword && <span className="error-message">{errors.confirmPassword.message}</span>}
+          </div>
+        </div>
+
+        <button type="submit" className="register-button">
+          Crear mi cuenta <FiArrowRight />
+        </button>
+
+        <div className="register-footer-links">
+          <button
+            type="button"
+            className="text-link"
+            onClick={() => navigate("/login")}
+          >
+            ¿Ya tienes cuenta? Inicia sesión
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

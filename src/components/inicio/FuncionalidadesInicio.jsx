@@ -1,42 +1,61 @@
 import React from "react";
 import "../../styles/FuncionalidadesInicio.css";
-import { FaFileAlt, FaUsers, FaEnvelope, FaCalendarAlt } from "react-icons/fa";
+import { FiPlusCircle, FiUsers, FiMail, FiCalendar, FiSmartphone, FiActivity } from "react-icons/fi";
 
 function FuncionalidadesInicio() {
+  const features = [
+    {
+      icon: <FiPlusCircle />,
+      title: "Cuchubales Ilimitados",
+      desc: "Crea tantos grupos como necesites. Sin límites, totalmente gratis."
+    },
+    {
+      icon: <FiUsers />,
+      title: "Gestión de Participantes",
+      desc: "Administra fácilmente quién entra, sale y participa en cada ciclo."
+    },
+    {
+      icon: <FiMail />,
+      title: "Notificaciones Inteligentes",
+      desc: "Avisos automáticos por correo para que nadie olvide su turno de pago."
+    },
+    {
+      icon: <FiCalendar />,
+      title: "Calendario de Pagos",
+      desc: "Cronograma visual claro de cuándo toca pagar y cuándo recibir."
+    },
+    {
+      icon: <FiActivity />,
+      title: "Estado en Tiempo Real",
+      desc: "Sigue el progreso del ahorro y los pagos pendientes al instante."
+    },
+    {
+      icon: <FiSmartphone />,
+      title: "Acceso Multiplataforma",
+      desc: "Gestiona tu ahorro desde tu celular, tablet o computadora."
+    }
+  ];
+
   return (
-    <div className="funcionalidades-container">
-      <h2>Funcionalidades</h2>
-      
-      <div className="funcionalidades-grid">
-        <div className="funcionalidad-card">
-          <div className="icon-container">
-            <FaFileAlt />
-          </div>
-          <h3>Crea los cuchubales que quieras, sin costo alguno.</h3>
-        </div>
-        
-        <div className="funcionalidad-card">
-          <div className="icon-container">
-            <FaUsers />
-          </div>
-          <h3>Agrega a todas las personas que quieras, mientras más gente más estarás ahorrando.</h3>
-        </div>
-        
-        <div className="funcionalidad-card">
-          <div className="icon-container">
-            <FaEnvelope />
-          </div>
-          <h3>Notifica por correo electrónico la participación de los integrantes.</h3>
-        </div>
-        
-        <div className="funcionalidad-card">
-          <div className="icon-container">
-            <FaCalendarAlt />
-          </div>
-          <h3>Agrega periodos de pago y la plataforma le indicará a los usuarios la fecha que les toca recibir.</h3>
-        </div>
+    <section className="features-section">
+      <div className="section-header">
+        <span className="section-subtitle">PODER Y SIMPLICIDAD</span>
+        <h2>Todo lo que necesitas para <span className="gradient-text">ahorrar mejor</span></h2>
+        <p>Olvídate del papel y las hojas de cálculo. Nuestra plataforma hace el trabajo pesado por ti.</p>
       </div>
-    </div>
+
+      <div className="features-grid">
+        {features.map((f, i) => (
+          <div className="feature-card" key={i}>
+            <div className="feature-icon-wrapper">
+              {f.icon}
+            </div>
+            <h3>{f.title}</h3>
+            <p>{f.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
