@@ -41,6 +41,7 @@
     font-weight: 700;
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -103,6 +104,13 @@
     display: none;
     font-size: 1.5rem;
     cursor: pointer;
+    color: var(--text-main);
+    z-index: 1001;
+    position: relative;
+}
+
+.mobile-menu {
+    display: none;
 }
 
 @media (max-width: 768px) {
@@ -115,6 +123,7 @@
     }
 
     .mobile-menu {
+        display: block;
         position: fixed;
         top: 0;
         left: 0;
