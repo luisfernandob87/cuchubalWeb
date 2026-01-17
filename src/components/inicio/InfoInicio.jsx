@@ -3,42 +3,42 @@ import "../../styles/InfoInicio.css";
 import heroImage from "../../assets/hero.png";
 import { FiTrendingUp, FiShield, FiUsers } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 
 function InfoInicio() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   return (
     <section className="hero-container animate-fade-in">
       <div className="hero-content">
-        <div className="badge">100% GRATIS Y SEGURO</div>
-        <h1>El Futuro del Ahorro <span className="gradient-text">Comunitario</span></h1>
+        <div className="badge">{t("hero.badge")}</div>
+        <h1>{t("hero.title")} <span className="gradient-text">{t("hero.subtitle")}</span></h1>
         <p>
-          Organiza tus cuchubales, tandas o sociedades con facilidad.
-          Lleva el control total de turnos, pagos y participantes en un solo lugar,
-          sin depósitos ni comisiones.
+          {t("hero.description")}
         </p>
 
         <div className="hero-actions">
           <button className="btn-primary-large" onClick={() => navigate("/add")}>
-            Empezar ahora — Es Gratis
+            {t("hero.cta")}
           </button>
           <button className="btn-outline-large" onClick={() => navigate("/functions")}>
-            Ver funciones
+            {t("hero.secondary")}
           </button>
         </div>
 
         <div className="hero-stats">
           <div className="stat">
             <FiShield />
-            <span>Seguro</span>
+            <span>{t("hero.statSec")}</span>
           </div>
           <div className="stat">
             <FiUsers />
-            <span>Colaborativo</span>
+            <span>{t("hero.statUsers")}</span>
           </div>
           <div className="stat">
             <FiTrendingUp />
-            <span>Eficiente</span>
+            <span>{t("hero.statReal")}</span>
           </div>
         </div>
       </div>

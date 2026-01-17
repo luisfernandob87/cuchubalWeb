@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 import { useForm } from "react-hook-form";
 import { FiMail, FiLock, FiArrowRight } from "react-icons/fi";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 import "./Principal.css";
 
 function Principal() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const {
     register,
     handleSubmit,
@@ -24,7 +26,6 @@ function Principal() {
       })
       .catch((err) => {
         console.error("Login error", err);
-        // Aquí podríamos agregar una notificación de error premium
       });
   };
 
@@ -37,35 +38,35 @@ function Principal() {
           className="login-logo"
           onClick={() => navigate("/")}
         />
-        <h1>Bienvenido de nuevo</h1>
-        <p>Gestiona tus ahorros en comunidad con estilo.</p>
+        <h1>{t("auth.welcome")}</h1>
+        <p>{t("auth.welcomeSub")}</p>
       </div>
 
       <form onSubmit={handleSubmit(submit)} className="login-form">
         <div className="input-group">
-          <FiMail className="input-icon" />
           <input
             type="email"
-            placeholder="Correo Electrónico"
-            {...register("correo", { required: "El correo es obligatorio" })}
-            className={`form-input ${errors.correo ? "error" : ""}`}
+            placeholder={t("common.email")}
+            {...register("correo", { required: t("contact.reqEmail") })}
+            className={`auth-input ${errors.correo ? "error" : ""}`}
           />
+          <FiMail className="input-icon" />
           {errors.correo && <span className="error-message">{errors.correo.message}</span>}
         </div>
 
         <div className="input-group">
-          <FiLock className="input-icon" />
           <input
             type="password"
-            placeholder="Contraseña"
-            {...register("password", { required: "La contraseña es obligatoria" })}
-            className={`form-input ${errors.password ? "error" : ""}`}
+            placeholder={t("common.password")}
+            {...register("password", { required: true })}
+            className={`auth-input ${errors.password ? "error" : ""}`}
           />
+          <FiLock className="input-icon" />
           {errors.password && <span className="error-message">{errors.password.message}</span>}
         </div>
 
         <button type="submit" className="login-button">
-          Iniciar Sesión <FiArrowRight />
+          {t("common.login")} <FiArrowRight />
         </button>
 
         <div className="login-footer-links">
@@ -74,14 +75,14 @@ function Principal() {
             className="text-link"
             onClick={() => navigate("/add")}
           >
-            ¿No tienes cuenta? Regístrate
+            {t("auth.noAccount")}
           </button>
           <button
             type="button"
             className="text-link"
             onClick={() => navigate("/restart")}
           >
-            Olvidé mi contraseña
+            {t("auth.forgot")}
           </button>
         </div>
       </form>

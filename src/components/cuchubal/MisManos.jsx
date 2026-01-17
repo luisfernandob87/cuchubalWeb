@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import api from "../../api/axios";
 import { FiCalendar, FiClock, FiDollarSign, FiUsers, FiTag } from "react-icons/fi";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 import "./Cuchubales.css"; // Reusing some CSS or adding specific ones
 
 function MisManos() {
+  const { t, language } = useLanguage();
   const userId = localStorage.getItem("userId");
   const [misManos, setMisManos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,29 +24,28 @@ function MisManos() {
       });
   }, [userId]);
 
-  if (loading) return <div className="loader">Cargando tus turnos...</div>;
+  if (loading) return <div className="loader">{t("dashboard.loadingTurns")}</div>;
 
   return (
     <div className="cuchubales-view animate-fade-in">
       <header className="view-header">
         <div>
-          <h1>Mis Turnos</h1>
-          <p>Consulta cuándo te toca recibir en cada uno de tus cuchubales.</p>
+          <h1>{t("dashboard.myTurns")}</h1>
+          <p>{t("dashboard.myTurnsDesc")}</p>
         </div>
       </header>
 
       {misManos.length === 0 ? (
         <div className="empty-state">
           <FiCalendar className="empty-icon" />
-          <h2>Aún no tienes turnos asignados</h2>
-          <p>Cuando te inviten a un cuchubal, aparecerán aquí tus fechas de pago.</p>
+          <h2>{t("dashboard.emptyTurnsTitle")}</h2>
+          <p>{t("dashboard.emptyTurnsDesc")}</p>
         </div>
       ) : (
         <div className="cuchubales-grid">
           {misManos.map((mano) => {
             const { cuchubal, numeroCuota } = mano;
 
-            // Safety check: if cuchubal is null for some reason, don't render it
             if (!cuchubal) return null;
 
             let agregar = 0;
@@ -61,32 +62,32 @@ function MisManos() {
                 <div className="card-header">
                   <div className="card-title">
                     <h3>{cuchubal.nombreCuchubal}</h3>
-                    <span className="badge-status">Turno #{numeroCuota}</span>
+                    <span className="badge-status">{t("dashboard.active")} #{numeroCuota}</span>
                   </div>
                 </div>
 
                 <div className="card-body">
                   <div className="info-item">
                     <FiClock />
-                    <span>Fecha estimada: <strong>{fechaPago.format("DD [de] MMMM, YYYY")}</strong></span>
+                    <span>{t("dashboard.estimatedDate")}: <strong>{fechaPago.locale(language).format("LL")}</strong></span>
                   </div>
                   <div className="info-item">
                     <FiDollarSign />
-                    <span>Monto a recibir: <strong>Q{cuchubal.cuotaPorParticipante * cuchubal.noParticipantes}</strong></span>
+                    <span>{t("dashboard.amountToReceive")}: <strong>{t("common.currency")}{cuchubal.cuotaPorParticipante * cuchubal.noParticipantes}</strong></span>
                   </div>
                   <div className="info-item">
                     <FiUsers />
-                    <span>Participantes: <strong>{cuchubal.noParticipantes}</strong></span>
+                    <span>{t("dashboard.participants")}: <strong>{cuchubal.noParticipantes}</strong></span>
                   </div>
                   <div className="info-item">
                     <FiTag />
-                    <span>Plan: <strong>{cuchubal.formaPago}</strong></span>
+                    <span>{t("dashboard.plan")}: <strong>{t(`common.${cuchubal.formaPago}`)}</strong></span>
                   </div>
                 </div>
 
                 <div className="card-footer">
                   <div className="start-date">
-                    Inició: {moment(cuchubal.fechaInicio).format("DD/MM/YYYY")}
+                    {t("dashboard.started")}: {moment(cuchubal.fechaInicio).locale(language).format("LL")}
                   </div>
                 </div>
               </div>

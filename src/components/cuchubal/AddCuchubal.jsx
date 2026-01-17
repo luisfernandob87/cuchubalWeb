@@ -1,11 +1,12 @@
-import React from "react";
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import api from "../../api/axios";
 import { FiEdit3, FiCalendar, FiUsers, FiDollarSign, FiCheck } from "react-icons/fi";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 import "./AddCuchubal.css";
 
 function AddCuchubal() {
+  const { t } = useLanguage();
   const {
     register,
     handleSubmit,
@@ -34,35 +35,35 @@ function AddCuchubal() {
   return (
     <div className="add-view animate-fade-in">
       <div className="view-header">
-        <h1>Nuevo Cuchubal</h1>
-        <p>Configura las reglas de tu nuevo grupo de ahorro inteligente.</p>
+        <h1>{t("addCuchubal.title")}</h1>
+        <p>{t("addCuchubal.desc")}</p>
       </div>
 
       <div className="form-card-container">
         <form onSubmit={handleSubmit(submit)} className="premium-form">
           <div className="form-grid">
             <div className="form-group full-width">
-              <label><FiEdit3 /> Nombre del Cuchubal</label>
+              <label><FiEdit3 /> {t("addCuchubal.nameLabel")}</label>
               <input
                 type="text"
-                placeholder="Ej. Ahorro Navideño 2026"
-                {...register("nombreCuchubal", { required: "El nombre es obligatorio" })}
+                placeholder={t("addCuchubal.namePlaceholder")}
+                {...register("nombreCuchubal", { required: true })}
               />
-              {errors.nombreCuchubal && <span className="error">{errors.nombreCuchubal.message}</span>}
+              {errors.nombreCuchubal && <span className="error">{t("addCuchubal.nameLabel")}</span>}
             </div>
 
             <div className="form-group">
-              <label><FiCalendar /> Periodo de Pago</label>
-              <select {...register("formaPago", { required: "Selecciona un periodo" })}>
-                <option value="">--Selecciona--</option>
-                <option value="Mensual">Mensual</option>
-                <option value="Quincenal">Quincenal</option>
-                <option value="Semanal">Semanal</option>
+              <label><FiCalendar /> {t("addCuchubal.periodLabel")}</label>
+              <select {...register("formaPago", { required: true })}>
+                <option value="">{t("addCuchubal.select")}</option>
+                <option value="Mensual">{t("addCuchubal.monthly")}</option>
+                <option value="Quincenal">{t("addCuchubal.biweekly")}</option>
+                <option value="Semanal">{t("addCuchubal.weekly")}</option>
               </select>
             </div>
 
             <div className="form-group">
-              <label><FiCalendar /> Fecha de Inicio</label>
+              <label><FiCalendar /> {t("addCuchubal.startDate")}</label>
               <input
                 type="date"
                 {...register("fechaInicio", { required: true })}
@@ -70,7 +71,7 @@ function AddCuchubal() {
             </div>
 
             <div className="form-group">
-              <label><FiUsers /> No. de Participantes</label>
+              <label><FiUsers /> {t("addCuchubal.participants")}</label>
               <input
                 type="number"
                 placeholder="0"
@@ -79,7 +80,7 @@ function AddCuchubal() {
             </div>
 
             <div className="form-group">
-              <label><FiDollarSign /> Cuota por Participante</label>
+              <label><FiDollarSign /> {t("addCuchubal.quota")}</label>
               <input
                 type="number"
                 placeholder="0.00"
@@ -99,19 +100,19 @@ function AddCuchubal() {
                   <div className="custom-check">
                     <FiCheck />
                   </div>
-                  Realizar sorteo automático de turnos
+                  {t("addCuchubal.autoDraw")}
                 </label>
               </div>
-              <p className="helper-text">Si se activa, el sistema asignará los turnos aleatoriamente.</p>
+              <p className="helper-text">{t("addCuchubal.autoDrawDesc")}</p>
             </div>
           </div>
 
           <div className="form-actions">
             <button type="button" className="btn-secondary" onClick={() => navigate("/cuchubal")}>
-              Cancelar
+              {t("addCuchubal.cancel")}
             </button>
             <button type="submit" className="btn-primary-large">
-              Siguiente Paso
+              {t("addCuchubal.next")}
             </button>
           </div>
         </form>

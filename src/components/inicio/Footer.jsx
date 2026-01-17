@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import "../../styles/Footer.css";
 import logo from "../../assets/logo.png";
 import { FiGithub, FiTwitter, FiInstagram } from "react-icons/fi";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   return (
     <footer className="footer">
@@ -15,7 +17,7 @@ function Footer() {
             <img src={logo} alt="Cuchubal" />
             <span>Cuchubal</span>
           </div>
-          <p>La forma más moderna y segura de ahorrar en comunidad.</p>
+          <p>{t("common.brandText")}</p>
           <div className="social-links">
             <a href="#"><FiTwitter /></a>
             <a href="#"><FiInstagram /></a>
@@ -25,20 +27,20 @@ function Footer() {
 
         <div className="footer-grid">
           <div className="footer-column">
-            <h3>Producto</h3>
-            <Link to="/functions">Funciones</Link>
-            <Link to="/faq">Preguntas Frecuentes</Link>
+            <h3>{t("common.product")}</h3>
+            <Link to="/functions">{t("common.functions")}</Link>
+            <Link to="/faq">{t("common.faq")}</Link>
           </div>
           <div className="footer-column">
-            <h3>Legal</h3>
-            <Link to="/confidentiality">Privacidad</Link>
-            <Link to="/contact">Contacto</Link>
+            <h3>{t("common.legal")}</h3>
+            <Link to="/confidentiality">{t("common.privacy")}</Link>
+            <Link to="/contact">{t("common.contact")}</Link>
           </div>
         </div>
       </div>
 
       <div className="footer-bottom">
-        <p>© {currentYear} Cuchubal. Todos los derechos reservados.</p>
+        <p>© {currentYear} Cuchubal. {t("common.rights")}.</p>
       </div>
     </footer>
   );

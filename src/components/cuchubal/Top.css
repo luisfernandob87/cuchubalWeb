@@ -1,6 +1,6 @@
 .dashboard-top {
   height: 80px;
-  background: rgba(15, 23, 42, 0.9);
+  background: var(--nav-bg);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--glass-border);
   display: flex;
@@ -12,6 +12,7 @@
   left: 0;
   right: 0;
   z-index: 101;
+  box-shadow: var(--shadow);
 }
 
 .top-logo {
@@ -30,6 +31,7 @@
   font-weight: 700;
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -78,8 +80,23 @@
   display: flex;
 }
 
+.icon-btn.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 0.8rem;
+  width: auto;
+}
+
+.lang-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
 .icon-btn:hover {
   color: var(--text-main);
+  background: var(--glass-border);
+  transform: translateY(-2px);
 }
 
 .user-profile {

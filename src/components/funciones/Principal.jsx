@@ -1,56 +1,37 @@
 import React from "react";
+import { FiUserPlus, FiPlusSquare, FiUsers, FiSettings, FiCheckCircle } from "react-icons/fi";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 import "./Principal.css";
 
 function Principal() {
+  const { t } = useLanguage();
+
+  const steps = [
+    { icon: <FiUserPlus />, title: t("howItWorks.s1"), description: t("howItWorks.s1d") },
+    { icon: <FiPlusSquare />, title: t("howItWorks.s2"), description: t("howItWorks.s2d") },
+    { icon: <FiUsers />, title: t("howItWorks.s3"), description: t("howItWorks.s3d") },
+    { icon: <FiSettings />, title: t("howItWorks.s4"), description: t("howItWorks.s4d") },
+    { icon: <FiCheckCircle />, title: t("howItWorks.s5"), description: t("howItWorks.s5d") }
+  ];
+
   return (
     <div className="funciones-principal-container">
-      <div className="funciones-feature-card">
-        <h4 className="funciones-feature-title">Crear Cuenta</h4>
-        <p className="funciones-feature-description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
-          molestias tempora iusto ut nostrum quas laudantium. Cupiditate nemo
-          culpa repellat corporis ipsam distinctio, minima, necessitatibus commodi
-          dignissimos, soluta tenetur dolorem!
-        </p>
+      <div className="section-header">
+        <span className="section-subtitle">{t("howItWorks.subtitle")}</span>
+        <h2>{t("howItWorks.title")} <span className="gradient-text">{t("howItWorks.titleColor")}</span></h2>
+        <p>{t("howItWorks.desc")}</p>
       </div>
 
-      <div className="funciones-feature-card">
-        <h4 className="funciones-feature-title">Crear Cuchubal</h4>
-        <p className="funciones-feature-description">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eveniet hic
-          dolore est aperiam enim earum aliquid magni animi illum iure, omnis et
-          distinctio quis molestiae pariatur officia obcaecati sit quibusdam.
-        </p>
-      </div>
-
-      <div className="funciones-feature-card">
-        <h4 className="funciones-feature-title">Añadir Participantes</h4>
-        <p className="funciones-feature-description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui
-          perferendis, molestiae ipsum accusamus consectetur incidunt adipisci
-          mollitia aliquid? Possimus consectetur laborum voluptatibus dolores ad
-          tenetur ipsum obcaecati distinctio aperiam corrupti.
-        </p>
-      </div>
-
-      <div className="funciones-feature-card">
-        <h4 className="funciones-feature-title">Control de Cuchubales</h4>
-        <p className="funciones-feature-description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis cum
-          est quos nulla porro maiores reiciendis labore provident commodi
-          deserunt reprehenderit dolor laboriosam architecto magnam, totam culpa
-          obcaecati velit illum.
-        </p>
-      </div>
-
-      <div className="funciones-feature-card">
-        <h4 className="funciones-feature-title">Control de manos</h4>
-        <p className="funciones-feature-description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque corrupti
-          similique, ex harum ad tempore vero nesciunt sequi repudiandae sit
-          nulla, quaerat facilis quod dolorem? Suscipit sed consequuntur alias
-          dolore!
-        </p>
+      <div className="funciones-grid">
+        {steps.map((step, index) => (
+          <div className="funciones-feature-card" key={index}>
+            <div className="funciones-icon-wrapper">
+              {step.icon}
+            </div>
+            <h4 className="funciones-feature-title">{step.title}</h4>
+            <p className="funciones-feature-description">{step.description}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

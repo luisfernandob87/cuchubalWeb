@@ -1,56 +1,36 @@
-import React from "react";
-import "./Principal.css"; // Import the CSS file we'll create
+import { FiChevronDown, FiHelpCircle } from "react-icons/fi";
+import { useLanguage } from "../../context/LanguageContext.jsx";
+import "./Principal.css";
 
 function Principal() {
+  const { t } = useLanguage();
+
+  const faqs = [
+    { question: t("faqPage.q1"), answer: t("faqPage.a1") },
+    { question: t("faqPage.q2"), answer: t("faqPage.a2") },
+    { question: t("faqPage.q3"), answer: t("faqPage.a3") },
+    { question: t("faqPage.q4"), answer: t("faqPage.a4") },
+    { question: t("faqPage.q5"), answer: t("faqPage.a5") }
+  ];
+
   return (
-    <div className="faq-container">
-      <div className="faq-item">
-        <h4 className="faq-question">¿Cuanto cobra la plataforma?</h4>
-        <p className="faq-answer">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab veritatis
-          suscipit nesciunt quis iure officiis nobis totam, harum nihil adipisci
-          pariatur labore minus inventore sapiente at non dolor aut animi.
-        </p>
+    <div className="faq-page-container">
+      <div className="section-header">
+        <span className="section-subtitle">{t("faqPage.subtitle")}</span>
+        <h2>{t("faqPage.title")} <span className="gradient-text">{t("faqPage.titleColor")}</span></h2>
+        <p>{t("faqPage.desc")}</p>
       </div>
-      
-      <div className="faq-item">
-        <h4 className="faq-question">¿Se tienen que hacer depositos para el uso?</h4>
-        <p className="faq-answer">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, nobis
-          perspiciatis facilis harum hic explicabo dolor eius mollitia saepe
-          cumque deleniti qui labore tenetur ut, ducimus delectus facere expedita
-          voluptatem!
-        </p>
-      </div>
-      
-      <div className="faq-item">
-        <h4 className="faq-question">¿Existen limites de uso?</h4>
-        <p className="faq-answer">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat dolor
-          nulla corrupti quia, magnam ea qui illum, dolorum nesciunt atque nemo
-          explicabo ipsum repudiandae temporibus officiis ex et obcaecati
-          eligendi?
-        </p>
-      </div>
-      
-      <div className="faq-item">
-        <h4 className="faq-question">¿Porque gratis?</h4>
-        <p className="faq-answer">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid
-          aliquam pariatur suscipit quo nihil quis voluptate sapiente officiis.
-          Architecto quod sit quae, hic sunt eos numquam neque eveniet
-          consequuntur placeat?
-        </p>
-      </div>
-      
-      <div className="faq-item">
-        <h4 className="faq-question">¿?</h4>
-        <p className="faq-answer">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo ea dolor,
-          non enim eum modi dolore, minus magni nobis necessitatibus molestiae
-          molestias. Quasi libero quo, velit tempora beatae aspernatur
-          accusantium.
-        </p>
+
+      <div className="faq-grid">
+        {faqs.map((faq, index) => (
+          <div className="faq-card" key={index}>
+            <div className="faq-question-row">
+              <FiHelpCircle className="faq-icon" />
+              <h4>{faq.question}</h4>
+            </div>
+            <p className="faq-answer">{faq.answer}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

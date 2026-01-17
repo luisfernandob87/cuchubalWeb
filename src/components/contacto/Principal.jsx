@@ -1,57 +1,84 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import "./Principal.css"; // Import the CSS file we'll create
+import { FiMail, FiMessageSquare, FiSend, FiType } from "react-icons/fi";
+import { useLanguage } from "../../context/LanguageContext.jsx";
+import "./Principal.css";
 
 function Principal() {
+  const { t } = useLanguage();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
-    <div className="contact-container">
-      <form onSubmit={handleSubmit(onSubmit)} className="contact-form">
-        <legend className="form-legend">Mensaje Nuevo</legend>
-        
-        <div className="form-group">
-          <label htmlFor="username">Correo Electrónico</label>
-          <input 
-            type="email" 
-            id="username"
-            className={`form-control ${errors.username ? 'is-invalid' : ''}`}
-            placeholder="Su correo electrónico"
-            {...register("username", { required: true })} 
-          />
-          {errors.username && <span className="error-message">El correo electrónico es requerido</span>}
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="asunto">Asunto</label>
-          <input 
-            type="text" 
-            id="asunto"
-            className={`form-control ${errors.asunto ? 'is-invalid' : ''}`}
-            placeholder="Asunto del mensaje"
-            {...register("asunto", { required: true })} 
-          />
-          {errors.asunto && <span className="error-message">El asunto es requerido</span>}
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="mensaje">Mensaje</label>
-          <textarea 
-            id="mensaje"
-            className={`form-control ${errors.mensaje ? 'is-invalid' : ''}`}
-            placeholder="Escriba su mensaje aquí"
-            rows="5"
-            {...register("mensaje", { required: true })} 
-          />
-          {errors.mensaje && <span className="error-message">El mensaje es requerido</span>}
-        </div>
-        
-        <button type="submit" className="submit-button">Enviar Mensaje</button>
-      </form>
+    <div className="contact-page-container">
+      <div className="section-header">
+        <span className="section-subtitle">{t("contact.subtitle")}</span>
+        <h2>{t("contact.title")} <span className="gradient-text">{t("contact.titleColor")}</span></h2>
+        <p>{t("contact.desc")}</p>
+      </div>
+
+      <div className="contact-card animate-fade-in">
+        <form onSubmit={handleSubmit(onSubmit)} className="contact-form">
+          <div className="form-group">
+            <label htmlFor="username">
+              <FiMail className="input-icon-label" /> {t("common.email")}
+            </label>
+            <div className="input-wrapper">
+              <input
+                type="email"
+                id="username"
+                className={`contact-input ${errors.username ? 'error' : ''}`}
+                placeholder="tu@correo.com"
+                {...register("username", { required: t("contact.reqEmail") })}
+              />
+            </div>
+            {errors.username && <span className="error-message">{errors.username.message}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="asunto">
+              <FiType className="input-icon-label" /> {t("contact.asunto")}
+            </label>
+            <div className="input-wrapper">
+              <input
+                type="text"
+                id="asunto"
+                className={`contact-input ${errors.asunto ? 'error' : ''}`}
+                placeholder={t("contact.asuntoPlaceholder")}
+                {...register("asunto", { required: t("contact.reqAsunto") })}
+              />
+            </div>
+            {errors.asunto && <span className="error-message">{errors.asunto.message}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="mensaje">
+              <FiMessageSquare className="input-icon-label" /> {t("contact.mensaje")}
+            </label>
+            <div className="input-wrapper">
+              <textarea
+                id="mensaje"
+                className={`contact-input area ${errors.mensaje ? 'error' : ''}`}
+                placeholder={t("contact.mensajePlaceholder")}
+                rows="5"
+                {...register("mensaje", { required: t("contact.reqMensaje") })}
+              />
+            </div>
+            {errors.mensaje && <span className="error-message">{errors.mensaje.message}</span>}
+          </div>
+
+          <button type="submit" className="btn-primary-large w-full">
+            {t("contact.btn")} <FiSend />
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

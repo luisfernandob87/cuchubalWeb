@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import api from "../../api/axios";
-import { FiMail, FiHash, FiSave, FiInfo, FiShuffle, FiUserCheck } from "react-icons/fi";
+import { FiMail, FiHash, FiSave, FiInfo, FiShuffle, FiUserCheck, FiPhone, FiMapPin } from "react-icons/fi";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 import "./AddManos.css";
 
 function AddManosSorteo() {
+  const { t } = useLanguage();
   const { state } = useLocation();
   const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
 
   if (!state || !state[0] || !state[1]) {
     navigate("/cuchubal");
     return null;
   }
 
-  const { noParticipantes, nombreCuchubal } = state[0].userData;
+  const noParticipantes = Number(state[0].userData.noParticipantes);
+  const { nombreCuchubal } = state[0].userData;
   const cuchuId = state[1].userData;
 
   const [mails, setMails] = useState(Array(noParticipantes).fill(""));
+  const [phones, setPhones] = useState(Array(noParticipantes).fill(""));
+  const [zones, setZones] = useState(Array(noParticipantes).fill(""));
   const [selectedNumbers, setSelectedNumbers] = useState({});
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const [isShuffleDisabled, setIsShuffleDisabled] = useState(true);
@@ -25,15 +31,48 @@ function AddManosSorteo() {
 
   const arrayParticipantes = Array.from({ length: noParticipantes }, (_, i) => i + 1);
 
+  useEffect(() => {
+    const detectZone = async () => {
+      let defaultCode = "";
+      try {
+        const res = await api.get(`/usuario/${userId}`);
+        if (res.data && res.data.zona) {
+          defaultCode = res.data.zona;
+        } else {
+          const lang = navigator.language;
+          if (lang.includes('GT')) defaultCode = "+502";
+          else if (lang.includes('MX')) defaultCode = "+52";
+          else if (lang.includes('ES')) defaultCode = "+34";
+          else defaultCode = "+";
+        }
+      } catch (err) {
+        console.error("Error detectando código:", err);
+      }
+      if (defaultCode) setZones(Array(noParticipantes).fill(defaultCode));
+    };
+    detectZone();
+  }, [userId, noParticipantes]);
+
   const handleMailChange = (index, value) => {
     const updatedMails = [...mails];
     updatedMails[index] = value;
     setMails(updatedMails);
-    // Si se cambia un correo después de sortear, invalidamos el sorteo para que vuelvan a hacerlo si quieren o simplemente para consistencia
     if (numbersGenerated) {
       setNumbersGenerated(false);
       setSelectedNumbers({});
     }
+  };
+
+  const handlePhoneChange = (index, value) => {
+    const updatedPhones = [...phones];
+    updatedPhones[index] = value;
+    setPhones(updatedPhones);
+  };
+
+  const handleZoneChange = (index, value) => {
+    const updatedZones = [...zones];
+    updatedZones[index] = value;
+    setZones(updatedZones);
   };
 
   const generateUniqueRandomNumbers = () => {
@@ -54,7 +93,7 @@ function AddManosSorteo() {
 
   const generateToken = () => Math.random().toString(36).substr(2, 8);
 
-  const processParticipant = async (mail, index) => {
+  const processParticipant = async (mail, phone, zone, index) => {
     try {
       const resUser = await api.post(`/usuario/`, { correo: mail });
       let usuarioId;
@@ -65,10 +104,18 @@ function AddManosSorteo() {
           nombre: mail.split('@')[0],
           correo: mail,
           password: token,
+          telefono: phone,
+          zona: zone
         });
         usuarioId = resSignup.data.data.id;
       } else {
         usuarioId = resUser.data.id;
+        if (!resUser.data.telefono || !resUser.data.zona) {
+          await api.put(`/usuario/${usuarioId}`, {
+            telefono: resUser.data.telefono || phone,
+            zona: resUser.data.zona || zone
+          });
+        }
       }
 
       await api.post(`/cuota`, {
@@ -85,10 +132,14 @@ function AddManosSorteo() {
   const handleSave = async () => {
     setLoading(true);
     try {
-      await Promise.all(mails.map((mail, index) => processParticipant(mail, index)));
+      await Promise.all(
+        mails.map((mail, index) =>
+          processParticipant(mail, phones[index], zones[index], index)
+        )
+      );
       navigate("/cuchubal");
     } catch (error) {
-      alert("Error al guardar los participantes.");
+      alert(t("dashboard.saveError"));
     } finally {
       setLoading(false);
     }
@@ -97,28 +148,31 @@ function AddManosSorteo() {
   return (
     <div className="add-manos-view animate-fade-in">
       <header className="view-header">
-        <h1>Sorteo de Turnos</h1>
-        <p>Cuchubal: <strong>{nombreCuchubal}</strong> • {noParticipantes} Participantes</p>
+        <h1>{t("dashboard.drawTitle")}</h1>
+        <p>Cuchubal: <strong>{nombreCuchubal}</strong> • {noParticipantes} {t("dashboard.participants")}</p>
       </header>
 
       <div className="info-banner">
         <FiInfo />
-        <p>
-          1. Ingresa los correos de todos los participantes. <br />
-          2. Presiona el botón de sorteo para asignar turnos al azar.
-        </p>
+        <p dangerouslySetInnerHTML={{ __html: t("dashboard.drawInfo") }} />
       </div>
 
       <div className="participants-grid">
         {arrayParticipantes.map((_, index) => (
           <div className={`participant-card ${numbersGenerated ? 'highlight' : ''}`} key={index}>
-            <div className="card-number">
-              {numbersGenerated ? <FiHash /> : (index + 1)}
-              <span className="number-val">{selectedNumbers[index] || ""}</span>
+            <div className="participant-header">
+              <div className="card-number">
+                {numbersGenerated ? <FiHash /> : (index + 1)}
+              </div>
+              {numbersGenerated && (
+                <div className="auto-turno">
+                  <FiCheckCircle /> {t("dashboard.turn")} #{selectedNumbers[index]}
+                </div>
+              )}
             </div>
 
             <div className="input-group">
-              <label><FiMail /> Correo del Participante</label>
+              <label><FiMail /> {t("dashboard.participantEmail")}</label>
               <input
                 type="email"
                 placeholder="ejemplo@correo.com"
@@ -128,9 +182,28 @@ function AddManosSorteo() {
               />
             </div>
 
-            {numbersGenerated && (
-              <div className="turno-badge">Turno #{selectedNumbers[index]}</div>
-            )}
+            <div className="input-row">
+              <div className="input-group" style={{ flex: '0 0 100px' }}>
+                <label><FiMapPin /> {t("common.zone")}</label>
+                <input
+                  type="text"
+                  placeholder="+502"
+                  value={zones[index] || ""}
+                  onChange={(e) => handleZoneChange(index, e.target.value)}
+                  disabled={loading}
+                />
+              </div>
+              <div className="input-group" style={{ flex: '1' }}>
+                <label><FiPhone /> {t("common.phone")}</label>
+                <input
+                  type="tel"
+                  placeholder="5555 5555"
+                  value={phones[index] || ""}
+                  onChange={(e) => handlePhoneChange(index, e.target.value)}
+                  disabled={loading}
+                />
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -142,25 +215,25 @@ function AddManosSorteo() {
             onClick={generateUniqueRandomNumbers}
             disabled={isShuffleDisabled}
           >
-            <FiShuffle /> Realizar Sorteo
+            <FiShuffle /> {t("dashboard.performDraw")}
           </button>
         ) : (
           <div className="success-banner">
-            <FiUserCheck /> ¡Sorteo completado! Revisa los turnos arriba.
+            <FiUserCheck /> {t("dashboard.drawCompleted")}
           </div>
         )}
       </div>
 
       <div className="form-actions">
         <button className="btn-secondary" onClick={() => navigate("/cuchubal")}>
-          Cancelar
+          {t("addCuchubal.cancel")}
         </button>
         <button
           className="btn-primary-large"
           onClick={handleSave}
           disabled={isSubmitDisabled}
         >
-          {loading ? "Guardando..." : "Finalizar y Guardar"} <FiSave />
+          {loading ? t("dashboard.saving") : t("dashboard.finishAndSave")} <FiSave />
         </button>
       </div>
     </div>

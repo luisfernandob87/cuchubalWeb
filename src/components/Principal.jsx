@@ -5,10 +5,12 @@ import InfoInicio from "./inicio/InfoInicio";
 import MenuInicio from "./inicio/MenuInicio";
 import { FiArrowRight } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext.jsx";
 import "../styles/Principal.css";
 
 function Principal() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   return (
     <div className="principal-container">
@@ -22,10 +24,10 @@ function Principal() {
         <section className="cta-section animate-fade-in">
           <div className="cta-card">
             <div className="cta-content">
-              <h2>¿Listo para empezar a <span className="gradient-text">ahorrar juntos</span>?</h2>
-              <p>Únete a miles de personas que ya gestionan sus ahorros de forma inteligente.</p>
+              <h2>{t("cta.title")} <span className="gradient-text">{t("cta.titleColor")}</span></h2>
+              <p>{t("cta.desc")}</p>
               <button className="btn-primary-large" onClick={() => navigate("/add")}>
-                Crear mi primer Cuchubal <FiArrowRight />
+                {t("cta.button")} <FiArrowRight />
               </button>
             </div>
             <div className="cta-glow"></div>

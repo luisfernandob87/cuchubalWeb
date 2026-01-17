@@ -1,44 +1,71 @@
 .funciones-principal-container {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 120px 2rem 80px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  background-color:#f5f5f5 ;
+  gap: 4rem;
+  background: transparent;
+}
+
+.funciones-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
 .funciones-feature-card {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 2.5rem;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+  overflow: hidden;
 }
 
 .funciones-feature-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary);
+  background: var(--card-hover);
+  box-shadow: var(--shadow-lg);
+}
+
+.funciones-icon-wrapper {
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.75rem;
+  box-shadow: 0 8px 16px rgba(99, 102, 241, 0.2);
 }
 
 .funciones-feature-title {
-  color: #2c3e50;
+  color: var(--text-main);
   font-size: 1.5rem;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #3498db;
-  padding-bottom: 8px;
+  font-weight: 700;
+  margin: 0;
 }
 
 .funciones-feature-description {
-  color: #7f8c8d;
-  line-height: 1.6;
+  color: var(--text-muted);
+  line-height: 1.7;
   font-size: 1rem;
+  margin: 0;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .funciones-principal-container {
-    grid-template-columns: 1fr;
+    padding-top: 100px;
+    gap: 2.5rem;
   }
 }

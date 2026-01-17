@@ -50,7 +50,7 @@
 
 .premium-form input:not([type="checkbox"]),
 .premium-form select {
-  background: rgba(15, 23, 42, 0.5);
+  background: var(--input-bg);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 0.875rem 1rem;
@@ -63,7 +63,7 @@
 .premium-form select:focus {
   outline: none;
   border-color: var(--primary);
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--input-focus-bg);
   box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 

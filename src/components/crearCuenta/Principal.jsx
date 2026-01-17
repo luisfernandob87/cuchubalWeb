@@ -3,17 +3,25 @@ import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 import { useForm } from "react-hook-form";
-import { FiUser, FiMail, FiLock, FiCheckCircle, FiArrowRight } from "react-icons/fi";
+import { FiUser, FiMail, FiLock, FiCheckCircle, FiArrowRight, FiPhone, FiMapPin } from "react-icons/fi";
+import { useLanguage } from "../../context/LanguageContext.jsx";
+import { useEffect } from "react";
 import "./Principal.css";
 
 function Principal() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    // Signup process remains clean as requested
+  }, [setValue]);
 
   const submit = (data) => {
     api.post("/signup", data).then((res) => {
@@ -34,62 +42,62 @@ function Principal() {
           className="register-logo"
           onClick={() => navigate("/")}
         />
-        <h1>Únete a Cuchubal</h1>
-        <p>Empieza a ahorrar en comunidad hoy mismo.</p>
+        <h1>{t("auth.join")}</h1>
+        <p>{t("auth.joinSub")}</p>
       </div>
 
       <form onSubmit={handleSubmit(submit)} className="register-form">
         <div className="input-grid">
           <div className="input-group">
-            <FiUser className="input-icon" />
             <input
-              placeholder="Nombre Completo"
+              placeholder={t("common.name")}
               type="text"
-              {...register("nombre", { required: "El nombre es requerido" })}
-              className={`form-input ${errors.nombre ? "error" : ""}`}
+              {...register("nombre", { required: true })}
+              className={`auth-input ${errors.nombre ? "error" : ""}`}
             />
-            {errors.nombre && <span className="error-message">{errors.nombre.message}</span>}
+            <FiUser className="input-icon" />
+            {errors.nombre && <span className="error-message">{t("common.name")}</span>}
           </div>
 
           <div className="input-group">
-            <FiMail className="input-icon" />
             <input
-              placeholder="Correo Electrónico"
+              placeholder={t("common.email")}
               type="email"
-              {...register("correo", { required: "El correo es requerido" })}
-              className={`form-input ${errors.correo ? "error" : ""}`}
+              {...register("correo", { required: true })}
+              className={`auth-input ${errors.correo ? "error" : ""}`}
             />
-            {errors.correo && <span className="error-message">{errors.correo.message}</span>}
+            <FiMail className="input-icon" />
+            {errors.correo && <span className="error-message">{t("contact.reqEmail")}</span>}
           </div>
 
           <div className="input-group">
-            <FiLock className="input-icon" />
             <input
-              placeholder="Contraseña"
+              placeholder={t("common.password")}
               type="password"
-              {...register("password", { required: "La contraseña es requerida" })}
-              className={`form-input ${errors.password ? "error" : ""}`}
+              {...register("password", { required: true })}
+              className={`auth-input ${errors.password ? "error" : ""}`}
             />
-            {errors.password && <span className="error-message">{errors.password.message}</span>}
+            <FiLock className="input-icon" />
+            {errors.password && <span className="error-message">{t("common.password")}</span>}
           </div>
 
           <div className="input-group">
-            <FiCheckCircle className="input-icon" />
             <input
-              placeholder="Confirmar Contraseña"
+              placeholder={t("common.confirmPassword")}
               type="password"
               {...register("confirmPassword", {
-                required: "La confirmación es requerida",
-                validate: (value) => value === password || "Las contraseñas no coinciden",
+                required: true,
+                validate: (value) => value === password || "Error",
               })}
-              className={`form-input ${errors.confirmPassword ? "error" : ""}`}
+              className={`auth-input ${errors.confirmPassword ? "error" : ""}`}
             />
+            <FiCheckCircle className="input-icon" />
             {errors.confirmPassword && <span className="error-message">{errors.confirmPassword.message}</span>}
           </div>
         </div>
 
         <button type="submit" className="register-button">
-          Crear mi cuenta <FiArrowRight />
+          {t("auth.createBtn")} <FiArrowRight />
         </button>
 
         <div className="register-footer-links">
@@ -98,7 +106,7 @@ function Principal() {
             className="text-link"
             onClick={() => navigate("/login")}
           >
-            ¿Ya tienes cuenta? Inicia sesión
+            {t("auth.hasAccount")}
           </button>
         </div>
       </form>

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import moment from "moment/moment";
+import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 import { FiCalendar, FiDollarSign, FiUsers, FiTrash2, FiPlus, FiChevronRight } from "react-icons/fi";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 import "./Cuchubales.css";
 
 function Cuchubales() {
+  const { t, language } = useLanguage();
   const userId = localStorage.getItem("userId");
   const [cuchubales, setCuchubales] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +30,7 @@ function Cuchubales() {
 
   const handleDelete = async (id, e) => {
     e.stopPropagation();
-    if (window.confirm("¿Está seguro que desea eliminar este cuchubal?")) {
+    if (window.confirm(t("dashboard.deleteConfirm"))) {
       try {
         await api.delete(`/cuchubal/${id}`);
         setCuchubales(cuchubales.filter((cuchubal) => cuchubal.id !== id));
@@ -38,27 +40,27 @@ function Cuchubales() {
     }
   };
 
-  if (loading) return <div className="loader">Cargando tus ahorros...</div>;
+  if (loading) return <div className="loader">{t("dashboard.loading")}</div>;
 
   return (
     <div className="cuchubales-view animate-fade-in">
       <header className="view-header">
         <div>
-          <h1>Mis Cuchubales</h1>
-          <p>Gestiona tus grupos de ahorro y monitorea el progreso.</p>
+          <h1>{t("dashboard.title")}</h1>
+          <p>{t("dashboard.desc")}</p>
         </div>
         <button className="btn-add" onClick={() => navigate("/cuchubal/addCuchubal")}>
-          <FiPlus /> Crear Nuevo
+          <FiPlus /> {t("dashboard.createNew")}
         </button>
       </header>
 
       {cuchubales.length === 0 ? (
         <div className="empty-state">
           <FiDollarSign className="empty-icon" />
-          <h2>Aún no tienes Cuchubales</h2>
-          <p>Crea tu primer grupo para empezar a ahorrar con tus amigos o familiares.</p>
+          <h2>{t("dashboard.emptyTitle")}</h2>
+          <p>{t("dashboard.emptyDesc")}</p>
           <button className="btn-primary" onClick={() => navigate("/cuchubal/addCuchubal")}>
-            Crear mi primer Cuchubal
+            {t("dashboard.emptyBtn")}
           </button>
         </div>
       ) : (
@@ -72,12 +74,12 @@ function Cuchubales() {
               <div className="card-header">
                 <div className="card-title">
                   <h3>{cuchubal.nombreCuchubal}</h3>
-                  <span className="badge-status">Activo</span>
+                  <span className="badge-status">{t("dashboard.active")}</span>
                 </div>
                 <button
                   onClick={(e) => handleDelete(cuchubal.id, e)}
                   className="card-delete-btn"
-                  title="Eliminar"
+                  title={t("common.delete")}
                 >
                   <FiTrash2 />
                 </button>
@@ -86,24 +88,24 @@ function Cuchubales() {
               <div className="card-body">
                 <div className="info-item">
                   <FiCalendar />
-                  <span>Pago: <strong>{cuchubal.formaPago}</strong></span>
+                  <span>{t("dashboard.payout")}: <strong>{t(`common.${cuchubal.formaPago}`)}</strong></span>
                 </div>
                 <div className="info-item">
                   <FiDollarSign />
-                  <span>Cuota: <strong>Q{cuchubal.cuotaPorParticipante}</strong></span>
+                  <span>{t("dashboard.quota")}: <strong>{t("common.currency")}{cuchubal.cuotaPorParticipante}</strong></span>
                 </div>
                 <div className="info-item">
                   <FiUsers />
-                  <span>Participantes: <strong>{cuchubal.noParticipantes}</strong></span>
+                  <span>{t("dashboard.participants")}: <strong>{cuchubal.noParticipantes}</strong></span>
                 </div>
               </div>
 
               <div className="card-footer">
                 <div className="start-date">
-                  Inicia: {moment(cuchubal.fechaInicio).format("DD MMM, YYYY")}
+                  {t("dashboard.starts")}: {moment(cuchubal.fechaInicio).locale(language).format("LL")}
                 </div>
                 <div className="view-details">
-                  Detalles <FiChevronRight />
+                  {t("dashboard.details")} <FiChevronRight />
                 </div>
               </div>
             </div>

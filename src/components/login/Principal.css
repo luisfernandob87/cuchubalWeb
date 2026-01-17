@@ -35,6 +35,7 @@
   margin-bottom: 0.5rem;
   background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -57,37 +58,43 @@
 
 .input-icon {
   position: absolute;
-  left: 1rem;
-  top: 1rem;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--text-muted);
   font-size: 1.2rem;
   pointer-events: none;
-  transition: color 0.3s ease;
-}
-
-.form-input {
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0.875rem 1rem 0.875rem 3rem;
-  color: var(--text-main);
-  font-size: 1rem;
   transition: all 0.3s ease;
+  z-index: 2;
 }
 
-.form-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  background: rgba(15, 23, 42, 0.8);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+.auth-input {
+  background: var(--input-bg) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  padding: 1rem 1rem 1rem 3.5rem !important;
+  color: var(--text-main) !important;
+  font-size: 1rem !important;
+  transition: all 0.3s ease !important;
+  width: 100% !important;
+  position: relative;
+  z-index: 1;
 }
 
-.form-input:focus+.input-icon {
+.auth-input:focus {
+  outline: none !important;
+  border-color: var(--primary) !important;
+  background: var(--input-focus-bg) !important;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important;
+}
+
+.auth-input:focus~.input-icon {
   color: var(--primary);
+  left: 1.1rem;
 }
 
-.form-input.error {
-  border-color: #ef4444;
+.auth-input.error {
+  border-color: #ef4444 !important;
 }
 
 .error-message {

@@ -3,9 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
 import api from "../../api/axios";
 import { FiArrowLeft, FiCalendar, FiClock, FiUser, FiCreditCard } from "react-icons/fi";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 import "./ManosSchedule.css";
 
 function Manos() {
+  const { t, language } = useLanguage();
   const { id } = useParams();
   const navigate = useNavigate();
   const [manos, setManos] = useState([]);
@@ -28,8 +30,8 @@ function Manos() {
       });
   }, [id]);
 
-  if (loading) return <div className="loader">Cargando cronograma...</div>;
-  if (!datosCuchubal) return <div className="error-state">No se encontraron datos para este cuchubal.</div>;
+  if (loading) return <div className="loader">{t("dashboard.loadingSchedule")}</div>;
+  if (!datosCuchubal) return <div className="error-state">{t("dashboard.noData")}</div>;
 
   let agregar = 0;
   let tipo = "";
@@ -50,20 +52,20 @@ function Manos() {
     <div className="manos-view animate-fade-in">
       <header className="view-header">
         <button className="btn-back" onClick={() => navigate("/cuchubal")}>
-          <FiArrowLeft /> Volver
+          <FiArrowLeft /> {t("common.back")}
         </button>
         <div className="header-info">
           <h1>{datosCuchubal.nombreCuchubal}</h1>
           <div className="cuchubal-meta">
-            <span className="meta-tag"><FiCalendar /> Iniciado: {moment(datosCuchubal.fechaInicio).format("DD/MM/YYYY")}</span>
-            <span className="meta-tag"><FiCreditCard /> Pago: {datosCuchubal.formaPago}</span>
-            <span className="meta-tag"><FiUser /> {datosCuchubal.noParticipantes} integrantes</span>
+            <span className="meta-tag"><FiCalendar /> {t("dashboard.started")}: {moment(datosCuchubal.fechaInicio).locale(language).format("L")}</span>
+            <span className="meta-tag"><FiCreditCard /> {t("dashboard.payout")}: {t(`common.${datosCuchubal.formaPago}`)}</span>
+            <span className="meta-tag"><FiUser /> {datosCuchubal.noParticipantes} {t("dashboard.members")}</span>
           </div>
         </div>
       </header>
 
       <div className="schedule-container">
-        <h2>Cronograma de Pagos y Turnos</h2>
+        <h2>{t("dashboard.scheduleTitle")}</h2>
         <div className="timeline">
           {manos.map((mano, index) => {
             const fechaPago = moment(datosCuchubal.fechaInicio)
@@ -85,10 +87,10 @@ function Manos() {
                   </div>
                   <div className="payment-info">
                     <div className="date">
-                      <FiClock /> {fechaPago.format("DD [de] MMMM, YYYY")}
+                      <FiClock /> {fechaPago.locale(language).format("LL")}
                     </div>
                     <div className="status-badge">
-                      {isPast ? "Completado" : "Próximo"}
+                      {isPast ? t("dashboard.completed") : t("dashboard.next")}
                     </div>
                   </div>
                 </div>
