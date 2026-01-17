@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import api from "../../api/axios";
-import { FiMail, FiHash, FiSave, FiInfo, FiShuffle, FiUserCheck, FiPhone, FiMapPin } from "react-icons/fi";
+import { FiMail, FiHash, FiSave, FiInfo, FiShuffle, FiUserCheck, FiPhone, FiMapPin, FiCheckCircle } from "react-icons/fi";
 import { useLanguage } from "../../context/LanguageContext.jsx";
 import "./AddManos.css";
 

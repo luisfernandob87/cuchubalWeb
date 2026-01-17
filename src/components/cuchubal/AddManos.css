@@ -26,69 +26,10 @@
     width: 100%;
 }
 
-.step-actions {
-    margin-bottom: 2rem;
+.participants-grid.stack {
     display: flex;
-    justify-content: center;
-}
-
-.btn-shuffle {
-    background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 14px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 20px rgba(236, 72, 153, 0.2);
-}
-
-.btn-shuffle:hover:not(:disabled) {
-    transform: scale(1.05);
-    filter: brightness(1.1);
-}
-
-.btn-shuffle:disabled {
-    background: var(--glass-bg);
-    color: var(--text-muted);
-    border: 1px solid var(--glass-border);
-    box-shadow: none;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-.participant-card.disabled {
-    opacity: 0.5;
-    pointer-events: none;
-}
-
-.participant-card .number-val {
-    margin-left: 0.25rem;
-    color: var(--primary);
-}
-
-.turno-badge {
-    position: absolute;
-    top: 0;
-    right: 1.5rem;
-    background: var(--primary);
-    color: white;
-    font-size: 0.65rem;
-    font-weight: 800;
-    padding: 0.2rem 0.5rem;
-    border-radius: 0 0 8px 8px;
-    text-transform: uppercase;
-}
-
-.participants-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: 1.25rem;
 }
 
 .participant-card {
@@ -104,47 +45,77 @@
     transition: all 0.3s ease;
 }
 
-.participant-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    border-bottom: 1px solid var(--glass-border);
-    padding-bottom: 0.8rem;
-    margin-bottom: 0.2rem;
-}
-
 .participant-card:hover {
     border-color: var(--primary);
     background: var(--card-hover);
 }
 
-.card-number {
-    width: 32px;
-    height: 32px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 8px;
-    display: flex;
+.participant-card.horizontal {
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    color: var(--primary);
-    flex-shrink: 0;
+    gap: 2rem;
+    padding: 1.25rem 2rem;
 }
 
-.input-row {
-    display: flex;
-    gap: 1rem;
+.participant-card.dragging {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border-color: var(--primary);
+    transform: scale(1.02);
+    cursor: grabbing;
 }
 
-.participant-card .input-group {
+.reorder-actions.drag-handle {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 80px;
+    padding-right: 2rem;
+    border-right: 1px solid var(--glass-border);
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
 }
 
-.participant-card .input-group.small {
-    flex: 0 0 100px;
+.reorder-actions.drag-handle:active {
+    cursor: grabbing;
+}
+
+.drag-icon {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+
+.participant-card:hover .drag-icon {
+    color: var(--primary);
+}
+
+.turn-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.turn-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.turn-val {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.card-content {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: center;
 }
 
 .participant-card label {
@@ -154,10 +125,10 @@
     display: flex;
     align-items: center;
     gap: 0.4rem;
+    margin-bottom: 0.25rem;
 }
 
-.participant-card input,
-.participant-card select {
+.participant-card input {
     background: var(--input-bg);
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -165,30 +136,71 @@
     color: var(--text-main);
     font-size: 0.9375rem;
     width: 100%;
+    transition: border-color 0.2s ease;
 }
 
-.auto-turno {
-    color: #22c55e;
-    font-weight: 600;
-    font-size: 0.875rem;
+.participant-card input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--input-focus-bg);
+}
+
+.input-row {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
 }
 
-@media (max-width: 640px) {
-    .participants-grid {
-        grid-template-columns: 1fr;
-    }
+.zone-input {
+    flex: 0 0 110px;
+}
 
-    .participant-card {
+.phone-input {
+    flex: 1;
+}
+
+.info-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-hint {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-top: 0.25rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .participant-card.horizontal {
         flex-direction: column;
         align-items: stretch;
+        padding: 1.5rem;
+        gap: 1rem;
     }
 
-    .card-number {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
+    .reorder-actions.drag-handle {
+        flex-direction: row;
+        justify-content: space-between;
+        padding-right: 0;
+        padding-bottom: 1rem;
+        border-right: none;
+        border-bottom: 1px solid var(--glass-border);
+        min-width: auto;
+    }
+
+    .turn-indicator {
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+
+    .card-content {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 }

@@ -141,13 +141,31 @@
     gap: 1rem;
 }
 
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
 .mobile-toggle {
     display: none;
     font-size: 1.5rem;
     cursor: pointer;
     color: var(--text-main);
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
     z-index: 1001;
-    position: relative;
+}
+
+.mobile-toggle:hover {
+    background: var(--glass-border);
+    color: var(--primary);
 }
 
 .mobile-menu {
@@ -163,8 +181,12 @@
         display: flex;
     }
 
+    .logo-text {
+        display: none;
+    }
+
     .mobile-toggle {
-        display: block;
+        display: flex;
     }
 
     .mobile-menu {

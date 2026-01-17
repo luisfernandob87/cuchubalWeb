@@ -22,8 +22,12 @@
 }
 
 @media (max-width: 768px) {
+    .dashboard-container {
+        padding-top: 70px;
+    }
+
     .dashboard-main-content {
-        margin-left: 80px;
+        margin-left: 0;
         padding: 1.5rem;
     }
 }

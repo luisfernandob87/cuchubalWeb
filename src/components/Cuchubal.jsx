@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Top from "./cuchubal/Top";
 import Side from "./cuchubal/Side";
@@ -12,11 +12,15 @@ import AddManosSorteo from "./cuchubal/AddManosSorteo";
 import "./CuchubalView.css";
 
 function Cuchubal() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
   return (
-    <div className="dashboard-layout">
-      <Top />
+    <div className={`dashboard-layout ${isSidebarOpen ? "sidebar-open" : ""}`}>
+      <Top toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
       <div className="dashboard-container">
-        <Side />
+        <Side isOpen={isSidebarOpen} closeSidebar={() => setIsSidebarOpen(false)} />
         <main className="dashboard-main-content">
           <Routes>
             <Route path="/" element={<Cuchubales />} />

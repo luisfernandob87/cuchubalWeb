@@ -39,9 +39,14 @@ export default function MenuInicio() {
   return (
     <header className={`main-header ${scrolled ? 'scrolled' : ''}`}>
       <nav className="nav-container">
-        <div className="nav-logo" onClick={() => navigate("/")}>
-          <img src={logo} alt="Cuchubal" />
-          <span className="logo-text">Cuchubal</span>
+        <div className="nav-left">
+          <div className="mobile-toggle" onClick={toggleMenu}>
+            {menuOpen ? <FiX /> : <FiMenu />}
+          </div>
+          <div className="nav-logo" onClick={() => navigate("/")}>
+            <img src={logo} alt="Cuchubal" />
+            <span className="logo-text">Cuchubal</span>
+          </div>
         </div>
 
         <div className="desktop-menu">
@@ -82,9 +87,6 @@ export default function MenuInicio() {
             <span>{language.toUpperCase()}</span>
           </button>
 
-          <div className="mobile-toggle" onClick={toggleMenu}>
-            {menuOpen ? <FiX /> : <FiMenu />}
-          </div>
         </div>
 
         <div className={`mobile-menu ${menuOpen ? 'active' : ''}`}>
