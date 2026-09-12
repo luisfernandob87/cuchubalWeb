@@ -39,9 +39,9 @@
 }
 
 .sidebar-link.active {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     color: white;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 20%, transparent);
 }
 
 .sidebar-link .icon {
@@ -62,7 +62,7 @@
     padding: 0.875rem 1rem;
     background: transparent;
     border: 1px solid transparent;
-    color: #ef4444;
+    color: var(--danger);
     font-weight: 600;
     cursor: pointer;
     border-radius: 12px;
@@ -70,8 +70,8 @@
 }
 
 .logout-button:hover {
-    background: rgba(239, 68, 68, 0.1);
-    border-color: rgba(239, 68, 68, 0.2);
+    background: color-mix(in srgb, var(--danger) 10%, transparent);
+    border-color: color-mix(in srgb, var(--danger) 22%, transparent);
 }
 
 .mobile-only {

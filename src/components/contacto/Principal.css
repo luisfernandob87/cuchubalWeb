@@ -65,11 +65,11 @@
   outline: none;
   border-color: var(--primary);
   background: var(--input-focus-bg);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 12%, transparent);
 }
 
 .contact-input.error {
-  border-color: #ef4444;
+  border-color: var(--danger);
 }
 
 .contact-input.area {
@@ -78,13 +78,9 @@
 }
 
 .error-message {
-  color: #ef4444;
+  color: var(--danger);
   font-size: 0.75rem;
   margin-top: 0.25rem;
-}
-
-.w-full {
-  width: 100%;
 }
 
 @media (max-width: 768px) {

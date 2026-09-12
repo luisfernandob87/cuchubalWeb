@@ -22,7 +22,7 @@
   margin-bottom: 1.5rem;
   cursor: pointer;
   transition: transform 0.3s ease;
-  filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.3));
+  filter: drop-shadow(0 0 15px var(--glow-primary));
 }
 
 .register-logo:hover {
@@ -33,10 +33,7 @@
   font-size: 1.875rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-main);
 }
 
 .register-header p {
@@ -91,7 +88,7 @@
   outline: none !important;
   border-color: var(--primary) !important;
   background: var(--input-focus-bg) !important;
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 12%, transparent) !important;
 }
 
 .auth-input:focus~.input-icon {
@@ -100,18 +97,18 @@
 }
 
 .auth-input.error {
-  border-color: #ef4444 !important;
+  border-color: var(--danger) !important;
 }
 
 .error-message {
-  color: #ef4444;
+  color: var(--danger);
   font-size: 0.75rem;
   margin-top: 0.25rem;
   margin-left: 0.5rem;
 }
 
 .register-button {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  background: var(--primary);
   color: white;
   border: none;
   border-radius: 12px;
@@ -125,12 +122,12 @@
   gap: 0.5rem;
   transition: all 0.3s ease;
   margin-top: 0.5rem;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  box-shadow: var(--shadow-brand);
 }
 
 .register-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 14px 34px -10px var(--glow-primary);
   filter: brightness(1.1);
 }
 

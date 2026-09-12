@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import api from "../../api/axios";
-import {
-  FiMail,
-  FiSave,
-  FiInfo,
-  FiPhone,
-  FiMapPin,
-  FiMenu
-} from "react-icons/fi";
 import { useLanguage } from "../../context/LanguageContext.jsx";
+import { useIcons } from "../../icons.js";
+import { detectCountryCode } from "../../data/countries";
+import CountryCodePicker from "./CountryCodePicker";
 import "./AddManos.css";
 
 // DND Kit Imports
@@ -30,7 +26,8 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-function SortableParticipantCard({ id, index, participant, loading, handleInputChange, t }) {
+function SortableParticipantCard({ id, index, participant, loading, handleInputChange, t, isMe }) {
+  const I = useIcons();
   const {
     attributes,
     listeners,
@@ -53,9 +50,10 @@ function SortableParticipantCard({ id, index, participant, loading, handleInputC
       style={style}
       className={`participant-card horizontal ${isDragging ? 'dragging' : ''}`}
     >
+      {isMe && <div className="me-badge"><I.User /> {t("dashboard.meLabel")}</div>}
       <div className="reorder-actions drag-handle" {...attributes} {...listeners}>
         <div className="drag-icon">
-          <FiMenu />
+          <I.Menu />
         </div>
         <div className="turn-indicator">
           <span className="turn-label">{t("dashboard.turn")}</span>
@@ -65,7 +63,7 @@ function SortableParticipantCard({ id, index, participant, loading, handleInputC
 
       <div className="card-content">
         <div className="input-group">
-          <label><FiMail /> {t("common.email")}</label>
+          <label><I.Mail /> {t("common.email")}</label>
           <input
             type="email"
             placeholder="ejemplo@correo.com"
@@ -77,17 +75,15 @@ function SortableParticipantCard({ id, index, participant, loading, handleInputC
 
         <div className="input-row">
           <div className="input-group zone-input">
-            <label><FiMapPin /> {t("common.zone")}</label>
-            <input
-              type="text"
-              placeholder="+502"
-              value={participant.zona}
-              onChange={(e) => handleInputChange(index, 'zona', e.target.value)}
+            <label><I.Globe /> {t("common.zone")}</label>
+            <CountryCodePicker
+              value={participant.zona || ""}
+              onChange={(code) => handleInputChange(index, "zona", code)}
               disabled={loading}
             />
           </div>
           <div className="input-group phone-input">
-            <label><FiPhone /> {t("common.phone")}</label>
+            <label><I.Phone /> {t("common.phone")}</label>
             <input
               type="tel"
               placeholder="5555 5555"
@@ -104,18 +100,15 @@ function SortableParticipantCard({ id, index, participant, loading, handleInputC
 
 function AddManos() {
   const { t } = useLanguage();
+  const I = useIcons();
   const { state } = useLocation();
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
 
-  if (!state || !state[0] || !state[1]) {
-    navigate("/cuchubal");
-    return null;
-  }
-
-  const noParticipantes = Number(state[0].userData.noParticipantes);
-  const { sorteo, nombreCuchubal } = state[0].userData;
-  const cuchuId = state[1].userData;
+  const hasValidState = !!state && !!state[0];
+  const noParticipantes = hasValidState ? Number(state[0].userData.noParticipantes) : 0;
+  const { sorteo, nombreCuchubal } = hasValidState ? state[0].userData : {};
+  const formData = hasValidState ? state[0].userData : null;
 
   const [participants, setParticipants] = useState(
     Array.from({ length: noParticipantes }, (_, i) => ({
@@ -128,6 +121,10 @@ function AddManos() {
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [meEntry, setMeEntry] = useState(null);
+  const [includeMe, setIncludeMe] = useState(true);
+  const idCounter = useRef(noParticipantes);
+  const nextInviteeId = () => `participant-${idCounter.current++}`;
 
   // Sensors for DND
   const sensors = useSensors(
@@ -142,33 +139,49 @@ function AddManos() {
   );
 
   useEffect(() => {
-    const detectZone = async () => {
-      let defaultCode = "";
+    const init = async () => {
+      let defaultCode = detectCountryCode();
       try {
         const res = await api.get(`/usuario/${userId}`);
-        if (res.data && res.data.zona) {
-          defaultCode = res.data.zona;
-        } else {
-          const lang = navigator.language;
-          if (lang.includes('GT')) defaultCode = "+502";
-          else if (lang.includes('MX')) defaultCode = "+52";
-          else if (lang.includes('ES')) defaultCode = "+34";
-          else defaultCode = "+";
+        if (res.data) {
+          if (res.data.zona) defaultCode = res.data.zona;
+          setMeEntry({
+            id: "me",
+            correo: res.data.correo || "",
+            telefono: res.data.telefono || "",
+            zona: res.data.zona || defaultCode,
+          });
         }
       } catch (err) {
-        console.error("Error detectando código:", err);
+        console.error("Error obteniendo usuario:", err);
       }
       if (defaultCode) {
-        setParticipants(prev => prev.map(p => ({ ...p, zona: defaultCode })));
+        setParticipants(prev => prev.map(p => (p.id === "me" ? p : { ...p, zona: defaultCode })));
       }
     };
-    detectZone();
+    init();
   }, [userId]);
 
+  useEffect(() => {
+    setParticipants(prev => {
+      if (includeMe && meEntry) {
+        if (prev[0] && prev[0].id !== "me") {
+          return [
+            { id: "me", correo: meEntry.correo, telefono: meEntry.telefono, zona: meEntry.zona },
+            ...prev.slice(1),
+          ];
+        }
+        return prev;
+      }
+      if (!includeMe && prev[0] && prev[0].id === "me") {
+        return [{ id: nextInviteeId(), correo: "", telefono: "", zona: "" }, ...prev.slice(1)];
+      }
+      return prev;
+    });
+  }, [includeMe, meEntry]);
+
   const handleInputChange = (index, field, value) => {
-    const updated = [...participants];
-    updated[index][field] = value;
-    setParticipants(updated);
+    setParticipants(prev => prev.map((p, i) => (i === index ? { ...p, [field]: value } : p)));
   };
 
   const handleDragEnd = (event) => {
@@ -188,70 +201,44 @@ function AddManos() {
     setIsButtonDisabled(!mailsFilled || loading);
   }, [participants, loading]);
 
-  const generateToken = () => Math.random().toString(36).substr(2, 8);
-
-  const processParticipant = async (participant, turnNumber) => {
-    try {
-      const { correo, telefono, zona } = participant;
-      const resUser = await api.post(`/usuario/`, { correo });
-      let usuarioId;
-
-      if (!resUser.data) {
-        const token = generateToken();
-        const resSignup = await api.post(`/signup`, {
-          nombre: correo.split('@')[0],
-          correo,
-          password: token,
-          telefono,
-          zona
-        });
-        usuarioId = resSignup.data.data.id;
-      } else {
-        usuarioId = resUser.data.id;
-        if (!resUser.data.telefono || !resUser.data.zona) {
-          await api.put(`/usuario/${usuarioId}`, {
-            telefono: resUser.data.telefono || telefono,
-            zona: resUser.data.zona || zona
-          });
-        }
-      }
-
-      await api.post(`/cuota`, {
-        numeroCuota: turnNumber,
-        idCuchubal: cuchuId,
-        idUsuario: usuarioId,
-      });
-
-    } catch (error) {
-      console.error(`Error procesando participante ${participant.correo}:`, error);
-      throw error;
-    }
-  };
-
   const handleSave = async () => {
     setLoading(true);
     try {
-      // Process in order of current state
-      for (let i = 0; i < participants.length; i++) {
-        await processParticipant(participants[i], i + 1);
-      }
+      const payload = {
+        ...formData,
+        idUsuario: localStorage.getItem("userId"),
+        noParticipantes: participants.length,
+        participantes: participants.map((p, i) => ({
+          correo: p.correo,
+          telefono: p.telefono,
+          zona: p.zona,
+          numeroCuota: i + 1,
+        })),
+      };
+      await api.post("/cuchubal/complete", payload);
       navigate("/cuchubal");
     } catch (error) {
+      console.error(error);
       alert(t("dashboard.saveError"));
     } finally {
       setLoading(false);
     }
   };
 
+  if (!hasValidState) {
+    navigate("/cuchubal");
+    return null;
+  }
+
   return (
     <div className="add-manos-view animate-fade-in">
       <header className="view-header">
         <h1>{t("dashboard.assignTitle")}</h1>
-        <p>Cuchubal: <strong>{nombreCuchubal}</strong> • {noParticipantes} {t("dashboard.payouts")}</p>
+        <p>Cuchubal: <strong>{nombreCuchubal}</strong> • {participants.length} {t("dashboard.payouts")}</p>
       </header>
 
       <div className="info-banner">
-        <FiInfo />
+        <I.Info />
         <div className="info-text">
           <p>
             {sorteo
@@ -263,6 +250,15 @@ function AddManos() {
           )}
         </div>
       </div>
+
+      <label className="include-me-check">
+        <input
+          type="checkbox"
+          checked={includeMe}
+          onChange={(e) => setIncludeMe(e.target.checked)}
+        />
+        {t("dashboard.includeMe")}
+      </label>
 
       <DndContext
         sensors={sensors}
@@ -283,6 +279,7 @@ function AddManos() {
                 loading={loading}
                 handleInputChange={handleInputChange}
                 t={t}
+                isMe={participant.id === "me"}
               />
             ))}
           </SortableContext>
@@ -298,11 +295,25 @@ function AddManos() {
           onClick={handleSave}
           disabled={isButtonDisabled}
         >
-          {loading ? t("dashboard.saving") : t("dashboard.finishBtn")} <FiSave />
+          {loading ? t("dashboard.saving") : t("dashboard.finishBtn")} <I.Save />
         </button>
       </div>
     </div>
   );
 }
+
+SortableParticipantCard.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  index: PropTypes.number.isRequired,
+  participant: PropTypes.shape({
+    correo: PropTypes.string,
+    telefono: PropTypes.string,
+    zona: PropTypes.string,
+  }).isRequired,
+  loading: PropTypes.bool.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
+  isMe: PropTypes.bool,
+};
 
 export default AddManos;

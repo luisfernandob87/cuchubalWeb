@@ -1,13 +1,14 @@
-import React from "react";
-import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import { FiBell, FiSearch, FiUser, FiSun, FiMoon, FiGlobe, FiMenu, FiX } from "react-icons/fi";
+import PropTypes from "prop-types";
+import { LogoMark } from "../Logo";
 import { useTheme } from "../../hooks/useTheme";
 import { useLanguage } from "../../context/LanguageContext.jsx";
+import { useIcons } from "../../icons.js";
 import "./Top.css";
 
 function Top({ toggleSidebar, isSidebarOpen }) {
   const navigate = useNavigate();
+  const I = useIcons();
   const { theme, toggleTheme } = useTheme();
   const { t, language, toggleLanguage } = useLanguage();
   const username = localStorage.getItem("usuario");
@@ -16,32 +17,30 @@ function Top({ toggleSidebar, isSidebarOpen }) {
     <header className="dashboard-top">
       <div className="top-left">
         <div className="mobile-toggle" onClick={toggleSidebar}>
-          {isSidebarOpen ? <FiX /> : <FiMenu />}
+          {isSidebarOpen ? <I.X /> : <I.Menu />}
         </div>
         <div className="top-logo" onClick={() => navigate("/")}>
-          <img src={logo} alt="Cuchubal" />
+          <LogoMark size={34} />
           <span className="logo-text">Cuchubal</span>
         </div>
       </div>
 
       <div className="top-right">
         <div className="search-bar">
-          <FiSearch />
+          <I.Search />
           <input type="text" placeholder={t("common.search")} />
         </div>
 
         <div className="top-actions">
           <div className="icon-actions">
             <button className="icon-btn" onClick={toggleTheme} title="Cambiar tema">
-              {theme === 'dark' ? <FiSun /> : <FiMoon />}
+              {theme === 'dark' ? <I.Sun /> : <I.Moon />}
             </button>
 
             <button className="icon-btn lang-toggle" onClick={toggleLanguage} title="Change Language">
-              <FiGlobe />
+              <I.Globe />
               <span className="lang-text">{language.toUpperCase()}</span>
             </button>
-
-
           </div>
 
           <div className="user-profile">
@@ -50,7 +49,7 @@ function Top({ toggleSidebar, isSidebarOpen }) {
               <span className="role">{t("common.member")}</span>
             </div>
             <div className="avatar">
-              <FiUser />
+              <I.User />
             </div>
           </div>
         </div>
@@ -60,3 +59,8 @@ function Top({ toggleSidebar, isSidebarOpen }) {
 }
 
 export default Top;
+
+Top.propTypes = {
+  toggleSidebar: PropTypes.func.isRequired,
+  isSidebarOpen: PropTypes.bool.isRequired,
+};

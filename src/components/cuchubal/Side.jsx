@@ -1,19 +1,21 @@
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { FiGrid, FiUser, FiPlusSquare, FiList, FiLogOut, FiX } from "react-icons/fi";
+import PropTypes from "prop-types";
 import { useLanguage } from "../../context/LanguageContext.jsx";
+import { useIcons } from "../../icons.js";
 import "./Side.css";
 
 function Side({ isOpen, closeSidebar }) {
   const { t } = useLanguage();
   const location = useLocation();
   const navigate = useNavigate();
+  const I = useIcons();
   const currentPath = location.pathname;
 
   const menuItems = [
-    { name: t("dashboardSidebar.myCuchubales"), path: "/cuchubal", icon: <FiGrid /> },
-    { name: t("dashboardSidebar.myTurns"), path: "/cuchubal/misManos", icon: <FiList /> },
-    { name: t("dashboardSidebar.create"), path: "/cuchubal/addCuchubal", icon: <FiPlusSquare /> },
-    { name: t("dashboardSidebar.profile"), path: "/cuchubal/profile", icon: <FiUser /> },
+    { name: t("dashboardSidebar.myCuchubales"), path: "/cuchubal", icon: <I.Grid /> },
+    { name: t("dashboardSidebar.myTurns"), path: "/cuchubal/misManos", icon: <I.List /> },
+    { name: t("dashboardSidebar.create"), path: "/cuchubal/addCuchubal", icon: <I.PlusSquare /> },
+    { name: t("dashboardSidebar.profile"), path: "/cuchubal/profile", icon: <I.User /> },
   ];
 
   const handleLogout = () => {
@@ -30,7 +32,7 @@ function Side({ isOpen, closeSidebar }) {
         <div className="sidebar-header mobile-only">
           <span className="logo-text">Cuchubal</span>
           <button className="close-sidebar" onClick={closeSidebar}>
-            <FiX />
+            <I.X />
           </button>
         </div>
 
@@ -50,7 +52,7 @@ function Side({ isOpen, closeSidebar }) {
 
         <div className="sidebar-footer">
           <button className="logout-button" onClick={handleLogout}>
-            <FiLogOut /> <span>{t("dashboardSidebar.logout")}</span>
+            <I.LogOut /> <span>{t("dashboardSidebar.logout")}</span>
           </button>
         </div>
       </aside>
@@ -59,3 +61,8 @@ function Side({ isOpen, closeSidebar }) {
 }
 
 export default Side;
+
+Side.propTypes = {
+  isOpen: PropTypes.bool,
+  closeSidebar: PropTypes.func.isRequired,
+};

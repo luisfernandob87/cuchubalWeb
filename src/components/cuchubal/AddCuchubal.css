@@ -48,6 +48,12 @@
   color: var(--primary);
 }
 
+.form-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  opacity: 0.85;
+}
+
 .premium-form input:not([type="checkbox"]),
 .premium-form select {
   background: var(--input-bg);
@@ -64,14 +70,14 @@
   outline: none;
   border-color: var(--primary);
   background: var(--input-focus-bg);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 12%, transparent);
 }
 
 .checkbox-group {
-  background: rgba(99, 102, 241, 0.05);
+  background: color-mix(in srgb, var(--primary) 6%, transparent);
   padding: 1.25rem;
   border-radius: 16px;
-  border: 1px solid rgba(99, 102, 241, 0.1);
+  border: 1px solid color-mix(in srgb, var(--primary) 12%, transparent);
 }
 
 .checkbox-wrapper {

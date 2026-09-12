@@ -39,14 +39,14 @@
 .funciones-icon-wrapper {
   width: 54px;
   height: 54px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  background: var(--primary);
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 1.75rem;
-  box-shadow: 0 8px 16px rgba(99, 102, 241, 0.2);
+  box-shadow: var(--shadow-brand);
 }
 
 .funciones-feature-title {

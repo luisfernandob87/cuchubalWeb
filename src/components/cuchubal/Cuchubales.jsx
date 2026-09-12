@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/axios";
-import { FiCalendar, FiDollarSign, FiUsers, FiTrash2, FiPlus, FiChevronRight } from "react-icons/fi";
 import { useLanguage } from "../../context/LanguageContext.jsx";
+import { useIcons } from "../../icons.js";
 import "./Cuchubales.css";
 
 function Cuchubales() {
   const { t, language } = useLanguage();
+  const I = useIcons();
   const userId = localStorage.getItem("userId");
   const [cuchubales, setCuchubales] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,13 +51,13 @@ function Cuchubales() {
           <p>{t("dashboard.desc")}</p>
         </div>
         <button className="btn-add" onClick={() => navigate("/cuchubal/addCuchubal")}>
-          <FiPlus /> {t("dashboard.createNew")}
+          <I.Plus /> {t("dashboard.createNew")}
         </button>
       </header>
 
       {cuchubales.length === 0 ? (
         <div className="empty-state">
-          <FiDollarSign className="empty-icon" />
+          <I.Coins className="empty-icon" />
           <h2>{t("dashboard.emptyTitle")}</h2>
           <p>{t("dashboard.emptyDesc")}</p>
           <button className="btn-primary" onClick={() => navigate("/cuchubal/addCuchubal")}>
@@ -81,21 +82,21 @@ function Cuchubales() {
                   className="card-delete-btn"
                   title={t("common.delete")}
                 >
-                  <FiTrash2 />
+                  <I.Trash />
                 </button>
               </div>
 
               <div className="card-body">
                 <div className="info-item">
-                  <FiCalendar />
+                  <I.Calendar />
                   <span>{t("dashboard.payout")}: <strong>{t(`common.${cuchubal.formaPago}`)}</strong></span>
                 </div>
                 <div className="info-item">
-                  <FiDollarSign />
+                  <I.DollarSign />
                   <span>{t("dashboard.quota")}: <strong>{t("common.currency")}{cuchubal.cuotaPorParticipante}</strong></span>
                 </div>
                 <div className="info-item">
-                  <FiUsers />
+                  <I.Users />
                   <span>{t("dashboard.participants")}: <strong>{cuchubal.noParticipantes}</strong></span>
                 </div>
               </div>
@@ -105,7 +106,7 @@ function Cuchubales() {
                   {t("dashboard.starts")}: {moment(cuchubal.fechaInicio).locale(language).format("LL")}
                 </div>
                 <div className="view-details">
-                  {t("dashboard.details")} <FiChevronRight />
+                  {t("dashboard.details")} <I.ChevronRight />
                 </div>
               </div>
             </div>

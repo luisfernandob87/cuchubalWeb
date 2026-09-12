@@ -1,9 +1,10 @@
-import { FiChevronDown, FiHelpCircle } from "react-icons/fi";
 import { useLanguage } from "../../context/LanguageContext.jsx";
+import { useIcons } from "../../icons.js";
 import "./Principal.css";
 
 function Principal() {
   const { t } = useLanguage();
+  const I = useIcons();
 
   const faqs = [
     { question: t("faqPage.q1"), answer: t("faqPage.a1") },
@@ -17,7 +18,7 @@ function Principal() {
     <div className="faq-page-container">
       <div className="section-header">
         <span className="section-subtitle">{t("faqPage.subtitle")}</span>
-        <h2>{t("faqPage.title")} <span className="gradient-text">{t("faqPage.titleColor")}</span></h2>
+        <h2>{t("faqPage.title")} <span className="accent-text">{t("faqPage.titleColor")}</span></h2>
         <p>{t("faqPage.desc")}</p>
       </div>
 
@@ -25,7 +26,7 @@ function Principal() {
         {faqs.map((faq, index) => (
           <div className="faq-card" key={index}>
             <div className="faq-question-row">
-              <FiHelpCircle className="faq-icon" />
+              <I.HelpCircle className="faq-icon" />
               <h4>{faq.question}</h4>
             </div>
             <p className="faq-answer">{faq.answer}</p>

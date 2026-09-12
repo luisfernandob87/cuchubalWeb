@@ -48,17 +48,15 @@
   cursor: pointer;
 }
 
-.top-logo img {
-  height: 32px;
+.top-logo svg {
+  height: 34px;
+  width: auto;
 }
 
 .logo-text {
   font-size: 1.25rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-main);
 }
 
 .top-right {

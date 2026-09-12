@@ -1,0 +1,270 @@
+.hero-mockup {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mock-glow {
+  position: absolute;
+  inset: 12%;
+  background: radial-gradient(circle, var(--glow-primary) 0%, transparent 70%);
+  filter: blur(60px);
+  opacity: 0.55;
+  z-index: 0;
+}
+
+.mock-card {
+  position: absolute;
+  background: var(--card-gradient);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-lg);
+  border-radius: 24px;
+  z-index: 2;
+}
+
+.mock-card-main {
+  width: 78%;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: floatSlow 7s ease-in-out infinite;
+}
+
+.mock-card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.mock-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  box-shadow: var(--shadow-brand);
+  flex-shrink: 0;
+}
+
+.mock-greeting {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.mock-role {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.mock-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mock-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--success);
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--success) 30%, transparent);
+  padding: 0.3rem 0.6rem;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.mock-amount {
+  display: flex;
+  flex-direction: column;
+}
+
+.mock-amount-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.mock-amount strong {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.mock-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.mock-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.mock-progress-track {
+  height: 10px;
+  border-radius: 100px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+}
+
+.mock-progress-fill {
+  width: 50%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary);
+  box-shadow: 0 0 12px var(--glow-primary);
+}
+
+.mock-turns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.mock-turn {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 12px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+}
+
+.mock-turn-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: var(--surface-soft);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.mock-turn-dot.done {
+  background: color-mix(in srgb, var(--success) 14%, transparent);
+  color: var(--success);
+}
+
+.mock-turn-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.mock-card-left,
+.mock-card-right {
+  width: 180px;
+  padding: 1.1rem 1.25rem;
+  animation: float 6s ease-in-out infinite;
+}
+
+.mock-card-left {
+  left: 2%;
+  top: 12%;
+  transform: rotate(-6deg);
+}
+
+.mock-card-right {
+  right: 0;
+  bottom: 10%;
+  transform: rotate(5deg);
+  animation-delay: 1s;
+}
+
+.mock-mini {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--primary);
+  font-size: 1.3rem;
+}
+
+.mock-mini span {
+  display: flex;
+  flex-direction: column;
+}
+
+.mock-mini small {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.mock-mini strong {
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.mock-coin {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: var(--shadow-brand);
+  z-index: 3;
+}
+
+.mock-coin.c1 {
+  top: 6%;
+  right: 8%;
+  animation: float 5s ease-in-out infinite;
+}
+
+.mock-coin.c2 {
+  bottom: 4%;
+  left: 10%;
+  animation: float 5.5s ease-in-out infinite 0.6s;
+}
+
+@media (max-width: 640px) {
+  .hero-mockup {
+    min-height: 420px;
+  }
+
+  .mock-card-main {
+    width: 90%;
+    padding: 1.25rem;
+  }
+
+  .mock-card-left,
+  .mock-card-right {
+    display: none;
+  }
+}

@@ -13,19 +13,21 @@ import Cuchubal from "./components/Cuchubal";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Principal />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/add" element={<CrearCuenta />} />
-      <Route path="/restart" element={<ReinicioPassword/>}/>
-      <Route path="/functions" element={<Funciones />} />
-      <Route path="/faq" element={<Preguntas />} />
-      <Route path="/confidentiality" element={<Politica />} />
-      <Route path="/contact" element={<Contacto />} />
-      <Route element={<ProtectedRoutes />}>
-        <Route path="/cuchubal/*" element={<Cuchubal />} />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Principal />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/add" element={<CrearCuenta />} />
+        <Route path="/restart" element={<ReinicioPassword />} />
+        <Route path="/functions" element={<Funciones />} />
+        <Route path="/faq" element={<Preguntas />} />
+        <Route path="/confidentiality" element={<Politica />} />
+        <Route path="/contact" element={<Contacto />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/cuchubal/*" element={<Cuchubal />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 

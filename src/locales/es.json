@@ -27,7 +27,14 @@
         "Quincenal": "Quincenal",
         "Semanal": "Semanal",
         "phone": "Teléfono",
-        "zone": "Cód. País"
+        "zone": "Cód. País",
+        "searchCountry": "Escribe el país o código...",
+        "noCountry": "No se encontraron países",
+        "pickCountry": "Selecciona el país",
+        "manualCode": "¿No encuentras tu país? Escribe el número.",
+        "manualCodePlaceholder": "+000",
+        "useCode": "Usar",
+        "invalidCode": "Código inválido. Escribe un número con indicativo (ej. +502)."
     },
     "nav": {
         "inicio": "Inicio",
@@ -83,7 +90,10 @@
         "resetBtn": "Enviar Enlace",
         "resetSuccess": "Correo Enviado",
         "resetSuccessSub": "Hemos enviado las instrucciones para restablecer tu contraseña a tu correo electrónico.",
-        "backLogin": "Volver al Inicio de Sesión"
+        "backLogin": "Volver al Inicio de Sesión",
+        "errorUserNotFound": "El correo no está registrado. Crea una cuenta para continuar.",
+        "errorInvalidPassword": "Contraseña incorrecta. Inténtalo de nuevo.",
+        "errorGeneric": "Error al iniciar sesión. Inténtalo de nuevo."
     },
     "contact": {
         "subtitle": "CONTACTO",
@@ -157,6 +167,7 @@
         "weekly": "Semanal",
         "startDate": "Fecha de Inicio",
         "participants": "No. de Participantes",
+        "participantsHint": "Total de manos incluyéndote. Si desactivas \"Agregarme\", quedas fuera y solo serás administrador.",
         "quota": "Cuota por Participante",
         "autoDraw": "Realizar sorteo automático de turnos",
         "autoDrawDesc": "Si se activa, el sistema asignará los turnos aleatoriamente.",
@@ -189,6 +200,8 @@
         "started": "Inició",
         "loadingSchedule": "Cargando cronograma...",
         "noData": "No se encontraron datos para este cuchubal.",
+        "emptyScheduleDesc": "Este cuchubal aún no tiene participantes asignados.",
+        "assignParticipantsBtn": "Asignar Participantes",
         "members": "integrantes",
         "scheduleTitle": "Cronograma de Pagos y Turnos",
         "completed": "Completado",
@@ -206,7 +219,9 @@
         "participantEmail": "Correo del Participante",
         "performDraw": "Realizar Sorteo",
         "drawCompleted": "¡Sorteo completado! Revisa los turnos arriba.",
-        "finishAndSave": "Finalizar y Guardar"
+        "finishAndSave": "Finalizar y Guardar",
+        "includeMe": "Agregarme a mí como participante",
+        "meLabel": "Tú"
     },
     "dashboardSidebar": {
         "myCuchubales": "Mis Cuchubales",

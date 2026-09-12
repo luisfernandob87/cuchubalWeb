@@ -31,18 +31,15 @@
     cursor: pointer;
 }
 
-.nav-logo img {
-    height: 40px;
-    width: auto;
+.nav-logo svg {
+  height: 40px;
+  width: auto;
 }
 
 .logo-text {
     font-size: 1.5rem;
     font-weight: 700;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-main);
 }
 
 .desktop-menu {
@@ -64,40 +61,8 @@
 }
 
 .auth-buttons {
-    display: flex;
-    gap: 1rem;
-}
-
-.btn-primary,
-.btn-secondary {
-    padding: 0.6rem 1.25rem;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: none;
-}
-
-.btn-primary {
-    background: var(--primary);
-    color: white;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
-}
-
-.btn-primary:hover {
-    background: var(--primary-hover);
-    transform: translateY(-1px);
-}
-
-.btn-secondary {
-    background: var(--glass-bg);
-    color: var(--text-main);
-    border: 1px solid var(--glass-border);
-}
-
-.btn-secondary:hover {
-    background: var(--glass-border);
+  display: flex;
+  gap: 1rem;
 }
 
 .nav-actions-group {

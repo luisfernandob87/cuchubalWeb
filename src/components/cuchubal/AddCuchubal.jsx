@@ -1,35 +1,30 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import api from "../../api/axios";
-import { FiEdit3, FiCalendar, FiUsers, FiDollarSign, FiCheck } from "react-icons/fi";
 import { useLanguage } from "../../context/LanguageContext.jsx";
+import { useIcons } from "../../icons.js";
 import "./AddCuchubal.css";
 
 function AddCuchubal() {
   const { t } = useLanguage();
+  const I = useIcons();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm();
 
   const navigate = useNavigate();
-  const userId = localStorage.getItem("userId");
 
   const submit = (data) => {
-    api.post("/cuchubal", { ...data, idUsuario: userId }).then((res) => {
-      const isSorteo = getValues("sorteo");
-      if (isSorteo) {
-        navigate("/cuchubal/addManosSorteo", {
-          state: [{ userData: data }, { userData: res.data.id }],
-        });
-      } else {
-        navigate("/cuchubal/addManos", {
-          state: [{ userData: data }, { userData: res.data.id }],
-        });
-      }
-    }).catch(err => console.error(err));
+    if (data.sorteo) {
+      navigate("/cuchubal/addManosSorteo", {
+        state: [{ userData: data }],
+      });
+    } else {
+      navigate("/cuchubal/addManos", {
+        state: [{ userData: data }],
+      });
+    }
   };
 
   return (
@@ -43,7 +38,7 @@ function AddCuchubal() {
         <form onSubmit={handleSubmit(submit)} className="premium-form">
           <div className="form-grid">
             <div className="form-group full-width">
-              <label><FiEdit3 /> {t("addCuchubal.nameLabel")}</label>
+              <label><I.Edit /> {t("addCuchubal.nameLabel")}</label>
               <input
                 type="text"
                 placeholder={t("addCuchubal.namePlaceholder")}
@@ -53,7 +48,7 @@ function AddCuchubal() {
             </div>
 
             <div className="form-group">
-              <label><FiCalendar /> {t("addCuchubal.periodLabel")}</label>
+              <label><I.Calendar /> {t("addCuchubal.periodLabel")}</label>
               <select {...register("formaPago", { required: true })}>
                 <option value="">{t("addCuchubal.select")}</option>
                 <option value="Mensual">{t("addCuchubal.monthly")}</option>
@@ -63,7 +58,7 @@ function AddCuchubal() {
             </div>
 
             <div className="form-group">
-              <label><FiCalendar /> {t("addCuchubal.startDate")}</label>
+              <label><I.Calendar /> {t("addCuchubal.startDate")}</label>
               <input
                 type="date"
                 {...register("fechaInicio", { required: true })}
@@ -71,21 +66,22 @@ function AddCuchubal() {
             </div>
 
             <div className="form-group">
-              <label><FiUsers /> {t("addCuchubal.participants")}</label>
+              <label><I.Users /> {t("addCuchubal.participants")}</label>
               <input
                 type="number"
                 placeholder="0"
-                {...register("noParticipantes", { required: true, min: 2 })}
+                {...register("noParticipantes", { required: true, min: 2, valueAsNumber: true })}
               />
+              <small className="form-hint">{t("addCuchubal.participantsHint")}</small>
             </div>
 
             <div className="form-group">
-              <label><FiDollarSign /> {t("addCuchubal.quota")}</label>
+              <label><I.DollarSign /> {t("addCuchubal.quota")}</label>
               <input
                 type="number"
                 placeholder="0.00"
                 step="0.01"
-                {...register("cuotaPorParticipante", { required: true })}
+                {...register("cuotaPorParticipante", { required: true, valueAsNumber: true })}
               />
             </div>
 
@@ -98,7 +94,7 @@ function AddCuchubal() {
                 />
                 <label htmlFor="sorteo">
                   <div className="custom-check">
-                    <FiCheck />
+                    <I.Check />
                   </div>
                   {t("addCuchubal.autoDraw")}
                 </label>

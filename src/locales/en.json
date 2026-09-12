@@ -27,7 +27,14 @@
         "Quincenal": "Biweekly",
         "Semanal": "Weekly",
         "phone": "Phone Number",
-        "zone": "Code"
+        "zone": "Code",
+        "searchCountry": "Type a country or code...",
+        "noCountry": "No countries found",
+        "pickCountry": "Select the country",
+        "manualCode": "Can't find your country? Type the number.",
+        "manualCodePlaceholder": "+000",
+        "useCode": "Use",
+        "invalidCode": "Invalid code. Type a number with dialing code (e.g. +502)."
     },
     "nav": {
         "inicio": "Home",
@@ -83,6 +90,10 @@
         "resetBtn": "Send Link",
         "resetSuccess": "Email Sent",
         "resetSuccessSub": "We've sent the instructions to reset your password to your email.",
+        "backLogin": "Back to Sign In",
+        "errorUserNotFound": "This email is not registered. Create an account to continue.",
+        "errorInvalidPassword": "Incorrect password. Try again.",
+        "errorGeneric": "Something went wrong while signing in. Try again.",
         "backLogin": "Back to Login"
     },
     "contact": {
@@ -157,6 +168,7 @@
         "weekly": "Weekly",
         "startDate": "Start Date",
         "participants": "No. of Participants",
+        "participantsHint": "Total hands including you. If \"Add me\" is off, you stay out and are only the admin.",
         "quota": "Quota per Participant",
         "autoDraw": "Automatic turn draw",
         "autoDrawDesc": "If activated, the system will assign turns randomly.",
@@ -189,6 +201,8 @@
         "started": "Started",
         "loadingSchedule": "Loading schedule...",
         "noData": "No data found for this cuchubal.",
+        "emptyScheduleDesc": "This cuchubal doesn't have participants assigned yet.",
+        "assignParticipantsBtn": "Assign Participants",
         "members": "members",
         "scheduleTitle": "Payments and Turns Schedule",
         "completed": "Completed",
@@ -206,7 +220,9 @@
         "participantEmail": "Participant's Email",
         "performDraw": "Perform Draw",
         "drawCompleted": "Draw completed! Check the turns above.",
-        "finishAndSave": "Finish and Save"
+        "finishAndSave": "Finish and Save",
+        "includeMe": "Add me as a participant",
+        "meLabel": "You"
     },
     "dashboardSidebar": {
         "myCuchubales": "My Cuchubales",

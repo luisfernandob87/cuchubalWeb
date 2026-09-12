@@ -1,11 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { FiMail, FiMessageSquare, FiSend, FiType } from "react-icons/fi";
 import { useLanguage } from "../../context/LanguageContext.jsx";
+import { useIcons } from "../../icons.js";
 import "./Principal.css";
 
 function Principal() {
   const { t } = useLanguage();
+  const I = useIcons();
   const {
     register,
     handleSubmit,
@@ -20,7 +20,7 @@ function Principal() {
     <div className="contact-page-container">
       <div className="section-header">
         <span className="section-subtitle">{t("contact.subtitle")}</span>
-        <h2>{t("contact.title")} <span className="gradient-text">{t("contact.titleColor")}</span></h2>
+        <h2>{t("contact.title")} <span className="accent-text">{t("contact.titleColor")}</span></h2>
         <p>{t("contact.desc")}</p>
       </div>
 
@@ -28,7 +28,7 @@ function Principal() {
         <form onSubmit={handleSubmit(onSubmit)} className="contact-form">
           <div className="form-group">
             <label htmlFor="username">
-              <FiMail className="input-icon-label" /> {t("common.email")}
+              <I.Mail className="input-icon-label" /> {t("common.email")}
             </label>
             <div className="input-wrapper">
               <input
@@ -44,7 +44,7 @@ function Principal() {
 
           <div className="form-group">
             <label htmlFor="asunto">
-              <FiType className="input-icon-label" /> {t("contact.asunto")}
+              <I.Type className="input-icon-label" /> {t("contact.asunto")}
             </label>
             <div className="input-wrapper">
               <input
@@ -60,7 +60,7 @@ function Principal() {
 
           <div className="form-group">
             <label htmlFor="mensaje">
-              <FiMessageSquare className="input-icon-label" /> {t("contact.mensaje")}
+              <I.Message className="input-icon-label" /> {t("contact.mensaje")}
             </label>
             <div className="input-wrapper">
               <textarea
@@ -75,7 +75,7 @@ function Principal() {
           </div>
 
           <button type="submit" className="btn-primary-large w-full">
-            {t("contact.btn")} <FiSend />
+            {t("contact.btn")} <I.Send />
           </button>
         </form>
       </div>

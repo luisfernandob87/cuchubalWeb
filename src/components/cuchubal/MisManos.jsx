@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import api from "../../api/axios";
-import { FiCalendar, FiClock, FiDollarSign, FiUsers, FiTag } from "react-icons/fi";
 import { useLanguage } from "../../context/LanguageContext.jsx";
-import "./Cuchubales.css"; // Reusing some CSS or adding specific ones
+import { useIcons } from "../../icons.js";
+import "./Cuchubales.css";
 
 function MisManos() {
   const { t, language } = useLanguage();
+  const I = useIcons();
   const userId = localStorage.getItem("userId");
   const [misManos, setMisManos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +38,7 @@ function MisManos() {
 
       {misManos.length === 0 ? (
         <div className="empty-state">
-          <FiCalendar className="empty-icon" />
+          <I.Calendar className="empty-icon" />
           <h2>{t("dashboard.emptyTurnsTitle")}</h2>
           <p>{t("dashboard.emptyTurnsDesc")}</p>
         </div>
@@ -68,19 +69,19 @@ function MisManos() {
 
                 <div className="card-body">
                   <div className="info-item">
-                    <FiClock />
+                    <I.Clock />
                     <span>{t("dashboard.estimatedDate")}: <strong>{fechaPago.locale(language).format("LL")}</strong></span>
                   </div>
                   <div className="info-item">
-                    <FiDollarSign />
+                    <I.DollarSign />
                     <span>{t("dashboard.amountToReceive")}: <strong>{t("common.currency")}{cuchubal.cuotaPorParticipante * cuchubal.noParticipantes}</strong></span>
                   </div>
                   <div className="info-item">
-                    <FiUsers />
+                    <I.Users />
                     <span>{t("dashboard.participants")}: <strong>{cuchubal.noParticipantes}</strong></span>
                   </div>
                   <div className="info-item">
-                    <FiTag />
+                    <I.Tag />
                     <span>{t("dashboard.plan")}: <strong>{t(`common.${cuchubal.formaPago}`)}</strong></span>
                   </div>
                 </div>

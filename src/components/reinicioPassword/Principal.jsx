@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import logo from "../../assets/logo.png";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { FiMail, FiArrowLeft, FiSend } from "react-icons/fi";
 import { useLanguage } from "../../context/LanguageContext.jsx";
+import { useIcons } from "../../icons.js";
+import { LogoMark } from "../Logo";
 import "./Principal.css";
 
 function Principal() {
   const navigate = useNavigate();
   const { t } = useLanguage();
+  const I = useIcons();
   const [submitted, setSubmitted] = useState(false);
   const {
     register,
@@ -27,7 +28,7 @@ function Principal() {
       <div className="reset-card animate-fade-in">
         <div className="reset-header">
           <div className="success-icon-wrapper">
-            <FiSend />
+            <I.Send />
           </div>
           <h1>{t("auth.resetSuccess")}</h1>
           <p>{t("auth.resetSuccessSub")}</p>
@@ -42,12 +43,14 @@ function Principal() {
   return (
     <div className="reset-card animate-fade-in">
       <div className="reset-header">
-        <img
-          src={logo}
-          alt="Cuchubal Logo"
+        <span
           className="reset-logo"
           onClick={() => navigate("/")}
-        />
+          role="button"
+          tabIndex={0}
+        >
+          <LogoMark size={80} />
+        </span>
         <h1>{t("auth.resetTitle")}</h1>
         <p>{t("auth.resetSub")}</p>
       </div>
@@ -60,12 +63,12 @@ function Principal() {
             {...register("correo", { required: true })}
             className={`auth-input ${errors.correo ? "error" : ""}`}
           />
-          <FiMail className="input-icon" />
+          <I.Mail className="input-icon" />
           {errors.correo && <span className="error-message">{t("contact.reqEmail")}</span>}
         </div>
 
         <button type="submit" className="reset-button">
-          {t("auth.resetBtn")} <FiSend />
+          {t("auth.resetBtn")} <I.Send />
         </button>
 
         <div className="reset-footer-links">
@@ -74,7 +77,7 @@ function Principal() {
             className="text-link"
             onClick={() => navigate("/login")}
           >
-            <FiArrowLeft /> {t("auth.backLogin")}
+            <I.ArrowLeft /> {t("auth.backLogin")}
           </button>
         </div>
       </form>
