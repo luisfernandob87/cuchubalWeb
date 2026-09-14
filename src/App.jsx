@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import CrearCuenta from "./components/CrearCuenta";
 import ReinicioPassword from "./components/ReinicioPassword";
+import Invite from "./components/Invite";
 import Funciones from "./components/Funciones";
 import Preguntas from "./components/Preguntas";
 import Politica from "./components/Politicas";
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/add" element={<CrearCuenta />} />
         <Route path="/restart" element={<ReinicioPassword />} />
+        <Route path="/invite/:token" element={<Invite />} />
         <Route path="/functions" element={<Funciones />} />
         <Route path="/faq" element={<Preguntas />} />
         <Route path="/confidentiality" element={<Politica />} />

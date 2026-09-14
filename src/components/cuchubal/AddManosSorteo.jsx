@@ -57,9 +57,19 @@ function AddManosSorteo() {
   }, [userId]);
 
   useEffect(() => {
-    setNumbersGenerated(false);
-    setSelectedNumbers({});
-  }, [includeMe, meLoaded]);
+    setEntries(prev => {
+      if (includeMe && me) {
+        return [
+          { ...prev[0], correo: me.correo || "", telefono: me.telefono || "", zona: me.zona || detectCountryCode() },
+          ...prev.slice(1),
+        ];
+      }
+      if (!includeMe) {
+        return prev.map((e, i) => (i === 0 ? { ...e, correo: "", telefono: "", zona: "" } : e));
+      }
+      return prev;
+    });
+  }, [includeMe, me]);
 
   const handleMailChange = (index, value) => {
     setEntries(prev => prev.map((e, i) => (i === index ? { ...e, correo: value } : e)));
@@ -88,10 +98,10 @@ function AddManosSorteo() {
   };
 
   useEffect(() => {
-    const mailsFilled = renderEntries.every(e => (e.correo || "").trim() !== "" && (e.correo || "").includes('@'));
+    const mailsFilled = entries.every(e => (e.correo || "").trim() !== "" && (e.correo || "").includes('@'));
     setIsShuffleDisabled(!mailsFilled);
     setIsSubmitDisabled(!mailsFilled || !numbersGenerated || loading);
-  }, [renderEntries, numbersGenerated, loading]);
+  }, [entries, numbersGenerated, loading]);
 
   const handleSave = async () => {
     setLoading(true);
@@ -99,8 +109,8 @@ function AddManosSorteo() {
       const payload = {
         ...formData,
         idUsuario: localStorage.getItem("userId"),
-        noParticipantes: renderEntries.length,
-        participantes: renderEntries.map((e, i) => ({
+        noParticipantes: entries.length,
+        participantes: entries.map((e, i) => ({
           correo: e.correo,
           telefono: e.telefono,
           zona: e.zona,
@@ -126,7 +136,7 @@ function AddManosSorteo() {
     <div className="add-manos-view animate-fade-in">
       <header className="view-header">
         <h1>{t("dashboard.drawTitle")}</h1>
-        <p>Cuchubal: <strong>{nombreCuchubal}</strong> • {renderEntries.length} {t("dashboard.participants")}</p>
+        <p>Cuchubal: <strong>{nombreCuchubal}</strong> • {entries.length} {t("dashboard.participants")}</p>
       </header>
 
       <div className="info-banner">
@@ -145,10 +155,10 @@ function AddManosSorteo() {
 
       <div className="participants-grid">
         {arrayParticipantes.map((_, index) => {
-          const entry = renderEntries[index];
-          const isMe = !!entry.isMe;
+          const entry = entries[index];
+          const isMe = index === 0 && includeMe && !!me;
           return (
-            <div className={`participant-card ${numbersGenerated ? 'highlight' : ''}`} key={index}>
+            <div className={`participant-card ${numbersGenerated ? 'highlight' : ''}`} key={entry.id}>
               <div className="participant-header">
                 <div className="card-number">
                   {numbersGenerated ? <I.Hash /> : (index + 1)}

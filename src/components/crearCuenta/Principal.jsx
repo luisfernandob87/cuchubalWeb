@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 import { useForm } from "react-hook-form";
 import { useLanguage } from "../../context/LanguageContext.jsx";
 import { useIcons } from "../../icons.js";
+import { detectCountryCode } from "../../data/countries";
+import CountryCodePicker from "../cuchubal/CountryCodePicker";
 import { LogoMark } from "../Logo";
 import "./Principal.css";
 
@@ -10,6 +13,8 @@ function Principal() {
   const navigate = useNavigate();
   const { t } = useLanguage();
   const I = useIcons();
+  const [zona, setZona] = useState(detectCountryCode());
+  const [created, setCreated] = useState(false);
   const {
     register,
     handleSubmit,
@@ -18,8 +23,10 @@ function Principal() {
   } = useForm();
 
   const submit = (data) => {
-    api.post("/signup", data).then(() => {
-      navigate("/login");
+    const payload = { ...data, zona, telefono: data.telefono || null };
+    api.post("/signup", payload).then(() => {
+      setCreated(true);
+      setTimeout(() => navigate("/login", { state: { registered: true } }), 1400);
     }).catch(err => {
       console.error("Signup error", err);
     });
@@ -90,9 +97,26 @@ function Principal() {
             <I.CheckCircle className="input-icon" />
             {errors.confirmPassword && <span className="error-message">{errors.confirmPassword.message}</span>}
           </div>
+
+          <div className="input-group">
+            <CountryCodePicker value={zona} onChange={setZona} />
+            <I.Globe className="input-icon" />
+          </div>
+
+          <div className="input-group">
+            <input
+              placeholder={t("common.phone")}
+              type="tel"
+              {...register("telefono")}
+              className="auth-input"
+            />
+            <I.Phone className="input-icon" />
+          </div>
         </div>
 
-        <button type="submit" className="register-button">
+        {created && <div className="success-alert">{t("auth.accountCreated")}</div>}
+
+        <button type="submit" className="register-button" disabled={created}>
           {t("auth.createBtn")} <I.ArrowRight />
         </button>
 

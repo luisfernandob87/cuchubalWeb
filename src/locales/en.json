@@ -94,7 +94,30 @@
         "errorUserNotFound": "This email is not registered. Create an account to continue.",
         "errorInvalidPassword": "Incorrect password. Try again.",
         "errorGeneric": "Something went wrong while signing in. Try again.",
-        "backLogin": "Back to Login"
+        "backLogin": "Back to Login",
+        "accountCreated": "Account created successfully! Redirecting to sign in...",
+        "accountCreatedLogin": "Account created! You can now sign in."
+    },
+    "invite": {
+        "title": "Set your password",
+        "sub": "Hi {nombre}, your cuchubal is waiting for you. Set your password to start participating.",
+        "loading": "Checking your invitation...",
+        "newPassword": "New password",
+        "confirmPassword": "Confirm password",
+        "setBtn": "Create my password",
+        "confirmMatch": "Passwords do not match",
+        "required": "This field is required",
+        "successTitle": "Password set!",
+        "successSub": "You can now sign in with your email and password.",
+        "goLogin": "Go to Sign In",
+        "invalidTitle": "Invalid invitation",
+        "invalidSub": "This link is not valid or has already been used.",
+        "networkTitle": "Couldn't connect",
+        "networkSub": "We couldn't validate your invitation. Check your connection and try again.",
+        "retry": "Retry",
+        "expiredTitle": "Invitation expired",
+        "expiredSub": "This link has expired. Ask the administrator to invite you again.",
+        "errorGeneric": "Something went wrong. Try again."
     },
     "contact": {
         "subtitle": "CONTACT",
@@ -207,6 +230,10 @@
         "scheduleTitle": "Payments and Turns Schedule",
         "completed": "Completed",
         "next": "Next",
+        "resendInvite": "Re-send invitation",
+        "sendingInvite": "Sending...",
+        "inviteSent": "Invitation re-sent to {correo}",
+        "inviteError": "Couldn't re-send the invitation. Try again.",
         "assignTitle": "Assign Participants",
         "assignInfoAuto": "Turns have been automatically assigned sequentially based on the order of entry.",
         "assignInfoManual": "Assign an email and a unique turn to each participant.",
@@ -230,5 +257,13 @@
         "create": "Create Cuchubal",
         "profile": "My Profile",
         "logout": "Logout"
+    },
+    "profile": {
+        "title": "My Profile",
+        "subtitle": "Update your personal information.",
+        "saveBtn": "Save Changes",
+        "saving": "Saving...",
+        "saveSuccess": "Profile updated successfully.",
+        "saveError": "Error saving your changes. Check the console."
     }
 }

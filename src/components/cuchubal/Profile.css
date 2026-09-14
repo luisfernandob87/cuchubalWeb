@@ -1,0 +1,105 @@
+.profile-view {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.profile-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.profile-form .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.profile-form label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.profile-form label svg {
+    color: var(--primary);
+}
+
+.profile-form input,
+.profile-form .country-picker-input {
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.6rem 0.8rem;
+    color: var(--text-main);
+    font-size: 0.9375rem;
+    font-family: inherit;
+    width: 100%;
+    transition: border-color 0.2s ease;
+}
+
+.profile-form input:focus,
+.profile-form .country-picker-input:focus-visible {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--input-focus-bg);
+}
+
+.profile-form input.error {
+    border-color: var(--danger);
+}
+
+.error-alert {
+    background: color-mix(in srgb, var(--danger) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--danger) 35%, transparent);
+    color: var(--danger);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+}
+
+.success-alert {
+    background: color-mix(in srgb, var(--success) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--success) 35%, transparent);
+    color: var(--success);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media (max-width: 640px) {
+    .profile-card {
+        padding: 1.5rem;
+    }
+
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+}

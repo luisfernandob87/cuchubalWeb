@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
 import api from "../../api/axios";
@@ -14,6 +14,29 @@ function Manos() {
   const [manos, setManos] = useState([]);
   const [datosCuchubal, setDatosCuchubal] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [sendingId, setSendingId] = useState(null);
+  const [inviteMsg, setInviteMsg] = useState(null);
+  const inviteTimer = useRef(null);
+
+  const showInviteMsg = (type, text) => {
+    setInviteMsg({ type, text });
+    if (inviteTimer.current) clearTimeout(inviteTimer.current);
+    inviteTimer.current = setTimeout(() => setInviteMsg(null), 6000);
+  };
+
+  const resendInvite = (userId, correo) => {
+    setSendingId(userId);
+    api
+      .post(`/cuchubal/${id}/invite/${userId}`)
+      .then(() => {
+        showInviteMsg("success", t("dashboard.inviteSent").replace("{correo}", correo));
+      })
+      .catch((err) => {
+        console.error(err);
+        showInviteMsg("error", t("dashboard.inviteError"));
+      })
+      .finally(() => setSendingId(null));
+  };
 
   useEffect(() => {
     api
@@ -70,6 +93,9 @@ function Manos() {
             <span className="meta-tag"><I.User /> {datosCuchubal.noParticipantes} {t("dashboard.members")}</span>
           </div>
         </div>
+        {inviteMsg && (
+          <div className={`invite-msg ${inviteMsg.type}`}>{inviteMsg.text}</div>
+        )}
       </header>
 
       <div className="schedule-container">
@@ -115,6 +141,24 @@ function Manos() {
                     <div className="status-badge">
                       {isPast ? t("dashboard.completed") : t("dashboard.next")}
                     </div>
+                    {mano.usuario && mano.usuario.invitePendiente && (
+                      <button
+                        type="button"
+                        className="btn-resend-invite"
+                        disabled={sendingId === mano.usuario.id}
+                        onClick={() => resendInvite(mano.usuario.id, mano.usuario.correo)}
+                      >
+                        {sendingId === mano.usuario.id ? (
+                          <>
+                            <I.RefreshCw className="spin" /> {t("dashboard.sendingInvite")}
+                          </>
+                        ) : (
+                          <>
+                            <I.Send /> {t("dashboard.resendInvite")}
+                          </>
+                        )}
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

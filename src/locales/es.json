@@ -93,7 +93,30 @@
         "backLogin": "Volver al Inicio de Sesión",
         "errorUserNotFound": "El correo no está registrado. Crea una cuenta para continuar.",
         "errorInvalidPassword": "Contraseña incorrecta. Inténtalo de nuevo.",
-        "errorGeneric": "Error al iniciar sesión. Inténtalo de nuevo."
+        "errorGeneric": "Error al iniciar sesión. Inténtalo de nuevo.",
+        "accountCreated": "¡Cuenta creada exitosamente! Te redirigimos al inicio de sesión...",
+        "accountCreatedLogin": "¡Cuenta creada correctamente! Ya puedes iniciar sesión."
+    },
+    "invite": {
+        "title": "Configura tu contraseña",
+        "sub": "Hola {nombre}, tu cuchubal te espera. Define tu contraseña para empezar a participar.",
+        "loading": "Comprobando tu invitación...",
+        "newPassword": "Nueva contraseña",
+        "confirmPassword": "Confirmar contraseña",
+        "setBtn": "Crear mi contraseña",
+        "confirmMatch": "Las contraseñas no coinciden",
+        "required": "Este campo es requerido",
+        "successTitle": "¡Contraseña configurada!",
+        "successSub": "Ya puedes iniciar sesión con tu correo y contraseña.",
+        "goLogin": "Ir al Inicio de Sesión",
+        "invalidTitle": "Invitación inválida",
+        "invalidSub": "Este enlace no es válido o ya fue utilizado.",
+        "networkTitle": "No pudimos conectarnos",
+        "networkSub": "No pudimos validar tu invitación. Verifica tu conexión y vuelve a intentarlo.",
+        "retry": "Reintentar",
+        "expiredTitle": "Invitación expirada",
+        "expiredSub": "Este enlace venció. Pide al administrador que te invite nuevamente.",
+        "errorGeneric": "Algo salió mal. Inténtalo de nuevo."
     },
     "contact": {
         "subtitle": "CONTACTO",
@@ -206,6 +229,10 @@
         "scheduleTitle": "Cronograma de Pagos y Turnos",
         "completed": "Completado",
         "next": "Próximo",
+        "resendInvite": "Reenviar invitación",
+        "sendingInvite": "Enviando...",
+        "inviteSent": "Invitación reenviada a {correo}",
+        "inviteError": "No se pudo reenviar la invitación. Inténtalo de nuevo.",
         "assignTitle": "Asignar Participantes",
         "assignInfoAuto": "Los turnos se han asignado automáticamente secuencial según el orden de ingreso.",
         "assignInfoManual": "Asigna un correo y un turno único a cada participante.",
@@ -229,5 +256,13 @@
         "create": "Crear Cuchubal",
         "profile": "Mi Perfil",
         "logout": "Cerrar Sesión"
+    },
+    "profile": {
+        "title": "Mi Perfil",
+        "subtitle": "Actualiza tus datos personales.",
+        "saveBtn": "Guardar cambios",
+        "saving": "Guardando...",
+        "saveSuccess": "Datos actualizados correctamente.",
+        "saveError": "Error al guardar los cambios. Revisa la consola."
     }
 }

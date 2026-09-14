@@ -61,6 +61,7 @@ const iconDefs = {
   Wallet: { feather: Fi.FiCreditCard, lucide: Lu.LuWallet, tabler: Tb.TbWallet },
   Palette: { feather: Fi.FiDroplet, lucide: Lu.LuPalette, tabler: Tb.TbColorSwatch },
   Eye: { feather: Fi.FiEye, lucide: Lu.LuEye, tabler: Tb.TbEye },
+  RefreshCw: { feather: Fi.FiRefreshCw, lucide: Lu.LuRefreshCw, tabler: Tb.TbRefresh },
 };
 
 export function useIcons() {

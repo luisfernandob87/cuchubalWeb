@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 import { useForm } from "react-hook-form";
 import { useLanguage } from "../../context/LanguageContext.jsx";
@@ -9,6 +9,7 @@ import "./Principal.css";
 
 function Principal() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useLanguage();
   const I = useIcons();
   const {
@@ -17,6 +18,7 @@ function Principal() {
     formState: { errors },
   } = useForm();
   const [serverError, setServerError] = useState("");
+  const created = !!location.state?.registered;
 
   const submit = (data) => {
     setServerError("");
@@ -74,6 +76,7 @@ function Principal() {
           {errors.password && <span className="error-message">{errors.password.message}</span>}
         </div>
 
+        {created && <div className="success-alert">{t("auth.accountCreatedLogin")}</div>}
         {serverError && <div className="error-alert">{serverError}</div>}
 
         <button type="submit" className="login-button">
